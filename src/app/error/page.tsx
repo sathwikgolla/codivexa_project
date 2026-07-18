@@ -54,13 +54,15 @@ export default function ErrorPage({
           </Card>
 
           <div className="flex items-center justify-center gap-4">
-            <Button
-              variant="outline"
-              icon={<RefreshCw className="w-4 h-4" />}
-              onClick={() => reset?.()}
-            >
-              Try Again
-            </Button>
+            {reset && (
+              <Button
+                variant="outline"
+                icon={<RefreshCw className="w-4 h-4" />}
+                onClick={reset}
+              >
+                Try Again
+              </Button>
+            )}
             <Link href="/">
               <Button variant="primary" icon={<Home className="w-4 h-4" />}>
                 Go to Home

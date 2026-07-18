@@ -2,10 +2,16 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { GraduationCap, Mail, Phone, MapPin } from 'lucide-react';
 
 export const Footer: React.FC = () => {
+  const pathname = usePathname();
   const currentYear = new Date().getFullYear();
+
+  if (pathname?.startsWith('/admin') || pathname?.startsWith('/admin-login')) {
+    return null;
+  }
 
   const footerLinks = {
     company: [
@@ -37,7 +43,7 @@ export const Footer: React.FC = () => {
   ];
 
   return (
-    <footer className="border-t border-[color:var(--border)] bg-[color:var(--card)] text-[color:var(--foreground)]/80">
+    <footer className="bg-gray-900 text-gray-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Brand Column */}
@@ -46,9 +52,9 @@ export const Footer: React.FC = () => {
               <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-2 rounded-lg">
                 <GraduationCap className="w-6 h-6 text-white" />
               </div>
-              <span className="text-xl font-bold text-[color:var(--foreground)]">Codivexa</span>
+              <span className="text-xl font-bold text-white">Codivexa</span>
             </div>
-            <p className="mb-6 text-[color:var(--foreground)]/70">
+            <p className="text-gray-400 mb-6">
               Empowering learners worldwide with premium education. Master new skills with expert-led courses and hands-on projects.
             </p>
             <div className="space-y-3">
@@ -70,13 +76,13 @@ export const Footer: React.FC = () => {
           {/* Link Columns */}
           {Object.entries(footerLinks).map(([title, links]) => (
             <div key={title}>
-              <h3 className="mb-4 font-semibold capitalize text-[color:var(--foreground)]">{title}</h3>
+              <h3 className="text-white font-semibold mb-4 capitalize">{title}</h3>
               <ul className="space-y-3">
                 {links.map((link) => (
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="text-sm text-[color:var(--foreground)]/70 transition-colors hover:text-[color:var(--primary)]"
+                      className="text-sm text-gray-400 hover:text-white transition-colors"
                     >
                       {link.name}
                     </Link>
@@ -88,9 +94,9 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="mt-12 border-t border-[color:var(--border)] pt-8">
+        <div className="border-t border-gray-800 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="mb-4 text-sm text-[color:var(--foreground)]/70 md:mb-0">
+            <p className="text-sm text-gray-400 mb-4 md:mb-0">
               © {currentYear} Codivexa. All rights reserved.
             </p>
             <div className="flex items-center space-x-4">
@@ -98,7 +104,7 @@ export const Footer: React.FC = () => {
                 <a
                   key={social.name}
                   href={social.href}
-                  className="text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+                  className="text-sm text-gray-400 hover:text-white transition-colors"
                 >
                   {social.name}
                 </a>

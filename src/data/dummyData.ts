@@ -830,15 +830,10 @@ export const generateDummyNotifications = (users: User[]): Notification[] => {
 
 // Initialize all dummy data
 export const initializeDummyData = () => {
-  const students = generateDummyStudents();
   const instructors = generateDummyInstructors();
   const courses = generateDummyCourses(instructors);
-  const payments = generateDummyPayments(students, courses);
-  const certificates = generateDummyCertificates(students, courses);
-  const reviews = generateDummyReviews(students, courses);
-  const notifications = generateDummyNotifications([...students, ...instructors]);
 
-  // Add admin user
+  // Add admin users
   const admin: Admin = {
     id: generateId(),
     fullName: 'Admin User',
@@ -851,15 +846,23 @@ export const initializeDummyData = () => {
     updatedAt: new Date('2023-01-01'),
   };
 
-  // Store all data
-  students.forEach(student => localStorageService.addUser(student));
+  const admin2: Admin = {
+    id: generateId(),
+    fullName: 'Sanjana Kasarla',
+    email: 'sanjanakasarla25092006@gmail.com',
+    mobile: '+1987654321',
+    password: 'admin123',
+    role: 'admin',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sanjana',
+    createdAt: new Date('2023-01-01'),
+    updatedAt: new Date('2023-01-01'),
+  };
+
+  // Store core catalog structure
   instructors.forEach(instructor => localStorageService.addUser(instructor));
   localStorageService.addUser(admin);
+  localStorageService.addUser(admin2);
   courses.forEach(course => localStorageService.addCourse(course));
-  payments.forEach(payment => localStorageService.addPayment(payment));
-  certificates.forEach(certificate => localStorageService.addCertificate(certificate));
-  reviews.forEach(review => localStorageService.addReview(review));
-  notifications.forEach(notification => localStorageService.addNotification(notification));
 
-  console.log('Dummy data initialized successfully!');
+  console.log('Core catalog data initialized successfully!');
 };

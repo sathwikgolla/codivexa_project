@@ -114,7 +114,7 @@ export default function PaymentPage() {
           localStorageService.updateUser(user.id, {
             ...updatedUser,
             progress: [...existingProgress, courseProgress],
-          });
+          } as any);
         }
       }
 
@@ -225,12 +225,9 @@ export default function PaymentPage() {
                 </h2>
                 <div className="flex gap-4 mb-6">
                   <img
-                    src={course.image || course.thumbnail || course.coverImage || '/images/course-placeholder.svg'}
+                    src={course.thumbnail}
                     alt={course.title}
                     className="w-24 h-24 object-cover rounded-lg"
-                    onError={(e) => {
-                      e.currentTarget.src = '/images/course-placeholder.svg';
-                    }}
                   />
                   <div>
                     <h3 className="font-semibold text-gray-900 dark:text-white mb-1">

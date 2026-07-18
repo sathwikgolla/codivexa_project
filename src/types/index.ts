@@ -11,11 +11,6 @@ export interface User {
   avatar?: string;
   address?: string;
   isBanned?: boolean;
-  enrolledCourses?: string[];
-  completedCourses?: string[];
-  certificates?: Certificate[];
-  wishlist?: string[];
-  progress?: CourseProgress[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -51,7 +46,7 @@ export interface Course {
   id: string;
   title: string;
   description: string;
-  thumbnail?: string;
+  thumbnail: string;
   image?: string;
   coverImage?: string;
   instructorId: string;
@@ -185,6 +180,7 @@ export interface Certificate {
   certificateId: string;
   qrCode: string;
   issuedBy: string;
+  status?: 'pending' | 'approved' | 'rejected';
 }
 
 // Payment Types
@@ -225,7 +221,7 @@ export interface CourseProgress {
   completedAssignments: string[];
   currentLessonIndex?: number;
   currentLessonId?: string;
-  watchPercentage?: number;
+  watchPercentage?: number | Record<string, number>;
   progressPercentage?: number;
   overallProgress: number; // percentage
   lastAccessed: Date;

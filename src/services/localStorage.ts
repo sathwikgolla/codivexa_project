@@ -180,6 +180,20 @@ class LocalStorageService {
     this.set(STORAGE_KEYS.CERTIFICATES, certificates);
   }
 
+  updateCertificate(id: string, updates: Partial<Certificate>): void {
+    const certificates = this.getCertificates();
+    const index = certificates.findIndex(c => c.id === id);
+    if (index !== -1) {
+      certificates[index] = { ...certificates[index], ...updates };
+      this.set(STORAGE_KEYS.CERTIFICATES, certificates);
+    }
+  }
+
+  deleteCertificate(id: string): void {
+    const certificates = this.getCertificates().filter(c => c.id !== id);
+    this.set(STORAGE_KEYS.CERTIFICATES, certificates);
+  }
+
   // Quiz Attempt methods
   getQuizAttempts(): QuizAttempt[] {
     return this.get<QuizAttempt>(STORAGE_KEYS.QUIZ_ATTEMPTS);
@@ -294,13 +308,7 @@ class LocalStorageService {
   // Theme
   getTheme(): 'light' | 'dark' {
     if (typeof window === 'undefined') return 'light';
-
-    const savedTheme = localStorage.getItem(STORAGE_KEYS.THEME) as 'light' | 'dark' | null;
-    if (savedTheme === 'light' || savedTheme === 'dark') {
-      return savedTheme;
-    }
-
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    return (localStorage.getItem(STORAGE_KEYS.THEME) as 'light' | 'dark') || 'light';
   }
 
   setTheme(theme: 'light' | 'dark'): void {

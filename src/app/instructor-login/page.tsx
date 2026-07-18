@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Mail, Lock, Eye, EyeOff, GraduationCap, ArrowLeft } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { localStorageService } from '@/services/localStorage';
 import { Input, Button, Card, CardBody } from '@/components/ui';
 import toast from 'react-hot-toast';
 
@@ -49,8 +50,8 @@ export default function InstructorLoginPage() {
       const success = await login(formData.email, formData.password);
       if (success) {
         // Check if user is instructor
-        const user = JSON.parse(localStorage.getItem('codivexa_currentUser') || '{}');
-        if (user.role === 'instructor') {
+        const user = localStorageService.getCurrentUser();
+        if (user && user.role === 'instructor') {
           toast.success('Instructor login successful! Redirecting to dashboard...', {
             duration: 2000,
           });

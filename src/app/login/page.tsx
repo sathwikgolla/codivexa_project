@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Mail, Lock, Eye, EyeOff, GraduationCap, ArrowLeft } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { localStorageService } from '@/services/localStorage';
 import { Input, Button, Card, CardBody } from '@/components/ui';
 import toast from 'react-hot-toast';
 
@@ -48,8 +49,8 @@ export default function LoginPage() {
     try {
       const success = await login(formData.email, formData.password);
       if (success) {
-        const user = (login as any).user || JSON.parse(localStorage.getItem('codivexa_currentUser') || '{}');
-        const userRole = user.role || 'student';
+        const user = localStorageService.getCurrentUser();
+        const userRole = user?.role || 'student';
         
         toast.success('Login successful! Redirecting to dashboard...', {
           duration: 2000,
@@ -82,14 +83,14 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[radial-gradient(circle_at_top_left,_rgba(99,102,241,0.14),_transparent_35%),linear-gradient(135deg,_var(--background)_0%,_var(--muted)_100%)] px-4 pb-12 pt-20">
+    <div className="min-h-screen pt-20 pb-12 px-4 flex items-center justify-center bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="w-full max-w-md"
       >
-        <Link href="/" className="mb-6 inline-flex items-center text-[color:var(--foreground)]/70 hover:text-[color:var(--primary)]">
+        <Link href="/" className="inline-flex items-center text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white mb-6">
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to Home
         </Link>
@@ -100,7 +101,7 @@ export default function LoginPage() {
               <div className="inline-flex p-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 mb-4">
                 <GraduationCap className="w-8 h-8 text-white" />
               </div>
-              <h1 className="mb-2 text-3xl font-bold text-[color:var(--foreground)]">
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
                 Welcome Back
               </h1>
               <p className="text-gray-600 dark:text-gray-400">
@@ -136,7 +137,7 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-9 text-[color:var(--foreground)]/60 hover:text-[color:var(--foreground)]"
+                  className="absolute right-3 top-9 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
                 >
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
@@ -148,11 +149,11 @@ export default function LoginPage() {
                     type="checkbox"
                     className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                   />
-                  <span className="ml-2 text-sm text-[color:var(--foreground)]/70">Remember me</span>
+                  <span className="ml-2 text-sm text-gray-600 dark:text-gray-400">Remember me</span>
                 </label>
                 <Link
                   href="/forgot-password"
-                  className="text-sm text-[color:var(--primary)] hover:text-[color:var(--secondary)]"
+                  className="text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
                 >
                   Forgot Password?
                 </Link>
