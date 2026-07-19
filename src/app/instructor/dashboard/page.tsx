@@ -243,7 +243,7 @@ export default function InstructorDashboard() {
                     <p className="text-gray-600 dark:text-gray-400 mb-4">
                       Create your first course to start teaching
                     </p>
-                    <Link href="/instructor/create-course">
+                    <Link href="/instructor/create-course" className="inline-block">
                       <Button variant="primary">Create Course</Button>
                     </Link>
                   </CardBody>
