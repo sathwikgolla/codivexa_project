@@ -143,6 +143,11 @@ export default function AssessmentPage() {
     setResult({ score, totalMarks, passed });
     setQuizSubmitted(true);
     setQuizStarted(false);
+    
+    // Log the attempt
+    import('@/services/localStorage').then(({ localStorageService }) => {
+      localStorageService.incrementAssessmentAttempts();
+    });
 
     if (passed) {
       toast.success('Assessment completed successfully!');

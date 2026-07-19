@@ -32,6 +32,7 @@ const STORAGE_KEYS = {
   CURRENT_USER: 'codivexa_current_user',
   THEME: 'codivexa_theme',
   COURSE_PROGRESS: 'codivexa_course_progress',
+  ASSESSMENT_ATTEMPTS: 'codivexa_assessment_attempts',
 };
 
 class LocalStorageService {
@@ -430,6 +431,20 @@ class LocalStorageService {
       p => !(p.studentId === studentId && p.courseId === courseId)
     );
     this.set(STORAGE_KEYS.COURSE_PROGRESS, progressList);
+  }
+
+  // Assessment Methods
+  getAssessmentAttempts(): number {
+    if (typeof window === 'undefined') return 0;
+    const data = localStorage.getItem(STORAGE_KEYS.ASSESSMENT_ATTEMPTS);
+    return data ? parseInt(data, 10) : 0;
+  }
+
+  incrementAssessmentAttempts(): void {
+    const current = this.getAssessmentAttempts();
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(STORAGE_KEYS.ASSESSMENT_ATTEMPTS, (current + 1).toString());
+    }
   }
 
   // Clear all data (for testing)

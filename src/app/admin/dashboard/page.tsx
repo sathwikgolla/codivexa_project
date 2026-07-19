@@ -37,6 +37,7 @@ export default function AdminDashboard() {
   const [platformName, setPlatformName] = useState('Codivexa');
   const [currency, setCurrency] = useState('USD');
   const [sessionTimeout, setSessionTimeout] = useState('30');
+  const [assessmentAttempts, setAssessmentAttempts] = useState(0);
   
   const [loading, setLoading] = useState(true);
   const [sidebarTab, setSidebarTab] = useState<
@@ -103,6 +104,7 @@ export default function AdminDashboard() {
     setCourses(allCourses);
     setPayments(allPayments);
     setCertificates(allCerts);
+    setAssessmentAttempts(localStorageService.getAssessmentAttempts());
 
     // Seed default submissions if queue is empty
     if (allSubs.length === 0 && allUsers.length > 0 && allCourses.length > 0) {
@@ -858,10 +860,11 @@ export default function AdminDashboard() {
         {/* 2. OVERVIEW PANEL */}
         {sidebarTab === 'overview' && (
           <div className="space-y-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
               {[
                 { label: 'Total Enrolled Students', value: totalEnrollments, icon: Users, color: 'text-blue-400', bg: 'bg-blue-500/10' },
                 { label: 'Active Courses Catalog', value: activeCoursesCount, icon: BookOpen, color: 'text-green-400', bg: 'bg-green-500/10' },
+                { label: 'Assessment Attempts', value: assessmentAttempts, icon: PlayCircle, color: 'text-purple-400', bg: 'bg-purple-500/10' },
                 { label: 'Total Successful Charges', value: `$${totalRevenue.toLocaleString()}`, icon: DollarSign, color: 'text-orange-400', bg: 'bg-orange-500/10' },
                 { label: 'Assessment Passing Rate', value: `${passPercentage}%`, icon: CheckCircle, color: 'text-amber-400', bg: 'bg-amber-500/10' },
               ].map((card, idx) => {
