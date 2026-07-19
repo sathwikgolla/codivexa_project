@@ -14,7 +14,7 @@ export const Card: React.FC<CardProps> = ({ children, className = '', hover = fa
   const baseStyles = 'rounded-2xl border border-[color:var(--border)] shadow-[var(--shadow)] transition-all duration-300';
   
   const glassStyles = glassmorphism
-    ? 'bg-[color:var(--card)]/80 backdrop-blur-xl'
+    ? 'bg-white/40 dark:bg-black/40 backdrop-blur-2xl border border-white/50 dark:border-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] relative overflow-hidden'
     : 'bg-[color:var(--card)]';
 
   const hoverStyles = hover

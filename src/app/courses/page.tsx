@@ -275,7 +275,7 @@ export default function CoursesPage() {
                         {course.description}
                       </p>
                       <div className="flex items-center gap-2 mb-4">
-                        <Avatar fallback={course.instructorName} alt={course.instructorName} size="sm" />
+                        <Avatar alt={course.instructorName} size="sm" />
                         <span className="text-sm text-gray-600 dark:text-gray-400">{course.instructorName}</span>
                       </div>
                       <div className="flex items-center gap-4 mb-4 text-sm text-gray-600 dark:text-gray-400">

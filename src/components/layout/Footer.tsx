@@ -15,31 +15,31 @@ export const Footer: React.FC = () => {
 
   const footerLinks = {
     company: [
-      { name: 'About Us', href: '/' },
+      { name: 'About Us', href: '/#about' },
       { name: 'Courses', href: '/courses' },
-      { name: 'Contact', href: '/' },
+      { name: 'Contact Us', href: 'mailto:support@codivexa.com' },
     ],
     resources: [
       { name: 'Courses', href: '/courses' },
       { name: 'Assessment', href: '/assessment' },
-      { name: 'Dashboard', href: '/student/dashboard' },
+      { name: 'Dashboard', href: '/login' },
     ],
     legal: [
-      { name: 'Privacy Policy', href: '/' },
-      { name: 'Terms of Service', href: '/' },
+      { name: 'Privacy Policy', href: '/#privacy' },
+      { name: 'Terms of Service', href: '/#terms' },
     ],
     support: [
-      { name: 'Help Center', href: '/' },
-      { name: 'Contact Us', href: '/' },
-      { name: 'FAQ', href: '/' },
+      { name: 'Help Center', href: 'mailto:support@codivexa.com' },
+      { name: 'Contact Us', href: 'mailto:support@codivexa.com' },
+      { name: 'FAQ', href: '/#faq' },
     ],
   };
 
   const socialLinks = [
-    { name: 'Facebook', href: '#' },
-    { name: 'Twitter', href: '#' },
-    { name: 'LinkedIn', href: '#' },
-    { name: 'GitHub', href: '#' },
+    { name: 'Facebook', href: 'https://facebook.com' },
+    { name: 'Twitter', href: 'https://twitter.com' },
+    { name: 'LinkedIn', href: 'https://linkedin.com' },
+    { name: 'GitHub', href: 'https://github.com' },
   ];
 
   return (
@@ -49,26 +49,26 @@ export const Footer: React.FC = () => {
           {/* Brand Column */}
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
-              <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-2 rounded-lg">
+              <div className="bg-gradient-to-r from-orange-500 to-blue-600 p-2 rounded-lg">
                 <GraduationCap className="w-6 h-6 text-white" />
               </div>
-              <span className="text-xl font-bold text-white">Codivexa</span>
+              <span className="text-xl font-bold text-gray-900 dark:text-white">Codivexa</span>
             </div>
-            <p className="text-gray-400 mb-6">
-              Empowering learners worldwide with premium education. Master new skills with expert-led courses and hands-on projects.
+            <p className="text-gray-400 mb-6 leading-relaxed pr-4">
+              Codivexa is your ultimate platform for modern, interactive learning. We empower students and professionals with cutting-edge courses, expert guidance, and hands-on projects. Learn, achieve, and succeed with us.
             </p>
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-blue-400" />
-                <span className="text-sm">support@codivexa.com</span>
+                <a href="mailto:support@codivexa.com" className="text-sm hover:text-white transition-colors">support@codivexa.com</a>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 text-blue-400" />
-                <span className="text-sm">+1 (555) 123-4567</span>
+                <a href="tel:+919876543210" className="text-sm hover:text-white transition-colors">+91 98765 43210</a>
               </div>
               <div className="flex items-center space-x-3">
                 <MapPin className="w-5 h-5 text-blue-400" />
-                <span className="text-sm">San Francisco, CA</span>
+                <span className="text-sm">Hyderabad, India</span>
               </div>
             </div>
           </div>

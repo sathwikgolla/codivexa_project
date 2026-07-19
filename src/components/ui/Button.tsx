@@ -25,7 +25,7 @@ export const Button: React.FC<ButtonProps> = ({
   const baseStyles = 'inline-flex items-center justify-center font-medium rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[color:var(--background)] disabled:opacity-50 disabled:cursor-not-allowed';
   
   const variants = {
-    primary: 'bg-gradient-to-r from-[color:var(--primary)] to-[color:var(--secondary)] text-white shadow-lg shadow-[color:var(--primary)]/20 hover:brightness-110 focus:ring-[color:var(--primary)]',
+    primary: 'bg-orange-500 hover:bg-orange-600 text-white shadow-lg shadow-orange-500/30 focus:ring-orange-500',
     secondary: 'bg-[color:var(--muted)] text-[color:var(--foreground)] hover:bg-[color:var(--border)] focus:ring-[color:var(--primary)]',
     outline: 'border border-[color:var(--primary)] text-[color:var(--primary)] hover:bg-[color:var(--muted)] focus:ring-[color:var(--primary)]',
     ghost: 'text-[color:var(--foreground)]/80 hover:bg-[color:var(--muted)] focus:ring-[color:var(--primary)]',

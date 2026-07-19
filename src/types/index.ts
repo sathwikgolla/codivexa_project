@@ -22,6 +22,8 @@ export interface Student extends User {
   certificates: Certificate[];
   wishlist: string[];
   progress: CourseProgress[];
+  streak?: number;
+  points?: number;
 }
 
 export interface Instructor extends User {

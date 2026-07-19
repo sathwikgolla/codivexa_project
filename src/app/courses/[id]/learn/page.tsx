@@ -9,7 +9,7 @@ import {
   BookOpen, FileText, Download, MessageSquare, Bookmark,
   ChevronRight, List, Volume2, Settings, Maximize2, Award, Trophy
 } from 'lucide-react';
-import { Button, Card, CardBody, Badge, ProgressBar } from '@/components/ui';
+import { Button, Card, CardBody, Badge, ProgressBar, AIChat } from '@/components/ui';
 import { localStorageService } from '@/services/localStorage';
 import { Course, Lesson, CourseProgress } from '@/types';
 import { useAuth } from '@/contexts/AuthContext';
@@ -32,6 +32,11 @@ export default function CourseLearnPage() {
   const [quizScore, setQuizScore] = useState(0);
   const [assignmentSubmitted, setAssignmentSubmitted] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
+  const [bookmarks, setBookmarks] = useState<{id: number, time: string, note: string}[]>([
+    { id: 1, time: '02:15', note: 'Important explanation of React Hooks' }
+  ]);
+  const [ideCode, setIdeCode] = useState('console.log("Hello Codivexa!");');
+  const [ideOutput, setIdeOutput] = useState('');
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -305,6 +310,16 @@ export default function CourseLearnPage() {
                   variant="outline"
                   icon={<Bookmark className="w-4 h-4" />}
                   className="border-gray-600 text-white hover:bg-gray-700"
+                  onClick={() => {
+                    const newBookmark = {
+                      id: Date.now(),
+                      time: `0${Math.floor(Math.random() * 5)}:${Math.floor(Math.random() * 60).toString().padStart(2, '0')}`,
+                      note: 'New bookmark added at current timestamp'
+                    };
+                    setBookmarks(prev => [...prev, newBookmark]);
+                    setActiveTab('bookmarks');
+                    toast.success('Bookmark added at current time');
+                  }}
                 >
                   Bookmark
                 </Button>
@@ -353,6 +368,16 @@ export default function CourseLearnPage() {
                   Resources
                 </button>
                 <button 
+                  onClick={() => setActiveTab('bookmarks')}
+                  className={`pb-2 border-b-2 font-medium transition-colors ${
+                    activeTab === 'bookmarks' 
+                      ? 'border-orange-500 text-orange-400' 
+                      : 'border-transparent text-gray-400 hover:text-orange-400'
+                  }`}
+                >
+                  Bookmarks
+                </button>
+                <button 
                   onClick={() => setActiveTab('discussion')}
                   className={`pb-2 border-b-2 font-medium transition-colors ${
                     activeTab === 'discussion' 
@@ -361,6 +386,16 @@ export default function CourseLearnPage() {
                   }`}
                 >
                   Discussion
+                </button>
+                <button 
+                  onClick={() => setActiveTab('editor')}
+                  className={`pb-2 border-b-2 font-medium transition-colors ${
+                    activeTab === 'editor' 
+                      ? 'border-green-500 text-green-400' 
+                      : 'border-transparent text-gray-400 hover:text-green-400'
+                  }`}
+                >
+                  Code Editor
                 </button>
               </div>
             </div>
@@ -425,39 +460,129 @@ export default function CourseLearnPage() {
               )}
               {activeTab === 'resources' && (
                 <div className="space-y-4">
-                  {currentLesson?.resources?.map((resource, index) => (
-                    <div key={index} className="flex items-center justify-between p-4 bg-gray-700 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <FileText className="w-5 h-5 text-blue-400" />
-                        <div>
-                          <p className="font-medium text-white">{resource.title}</p>
-                          <p className="text-sm text-gray-400 capitalize">{resource.type}</p>
+                  <h3 className="text-lg font-medium text-white mb-4">Downloadable Resources</h3>
+                  {currentLesson?.resources ? (
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      {currentLesson.resources.map((resource, i) => (
+                        <div key={i} className="flex items-center justify-between p-3 bg-gray-800 rounded-lg border border-gray-700">
+                          <div className="flex items-center gap-3">
+                            <FileText className="w-5 h-5 text-blue-500" />
+                            <span className="text-sm font-medium text-white">{resource.title}</span>
+                          </div>
+                          <a 
+                            href={resource.url} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="p-2 hover:bg-gray-700 rounded-full transition-colors"
+                          >
+                            <Download className="w-4 h-4 text-gray-400 hover:text-white" />
+                          </a>
                         </div>
-                      </div>
-                      <Button variant="outline" size="sm" icon={<Download className="w-4 h-4" />}>
-                        Download
-                      </Button>
+                      ))}
                     </div>
-                  ))}
-                  {(!currentLesson?.resources || currentLesson.resources.length === 0) && (
-                    <p className="text-gray-500 text-center py-8">No resources available for this lesson</p>
+                  ) : (
+                    <div className="text-center py-8 bg-gray-800/50 rounded-lg border border-gray-700 border-dashed">
+                      <p className="text-gray-400">No resources available for this lesson.</p>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {activeTab === 'bookmarks' && (
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center mb-4">
+                    <h3 className="text-lg font-medium text-white">Video Bookmarks</h3>
+                    <Badge variant="warning">{bookmarks.length} saved</Badge>
+                  </div>
+                  {bookmarks.length > 0 ? (
+                    <div className="space-y-3">
+                      {bookmarks.map((bm) => (
+                        <div key={bm.id} className="flex gap-4 p-4 bg-gray-800 rounded-lg border border-gray-700 hover:border-orange-500/50 transition-colors cursor-pointer">
+                          <div className="flex flex-col items-center justify-center bg-gray-900 px-3 py-1 rounded text-orange-400 font-mono text-sm shrink-0">
+                            <Play className="w-3 h-3 mb-1" />
+                            {bm.time}
+                          </div>
+                          <div>
+                            <p className="text-gray-200 text-sm">{bm.note}</p>
+                            <p className="text-xs text-gray-500 mt-1">Click to jump to timestamp</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center py-8 bg-gray-800/50 rounded-lg border border-gray-700 border-dashed">
+                      <Bookmark className="w-8 h-8 text-gray-600 mx-auto mb-2" />
+                      <p className="text-gray-400">You haven't added any bookmarks yet.</p>
+                      <p className="text-sm text-gray-500 mt-1">Click the Bookmark button to save a timestamp.</p>
+                    </div>
                   )}
                 </div>
               )}
               {activeTab === 'discussion' && (
-                <div className="space-y-4">
-                  <div className="bg-gray-700 p-4 rounded-lg">
-                    <textarea
-                      className="w-full p-3 bg-gray-600 border border-gray-500 rounded-lg text-gray-300 placeholder-gray-500 mb-3"
-                      rows={3}
-                      placeholder="Ask a question or share your thoughts..."
-                    />
-                    <Button variant="primary" size="sm">
-                      Post Comment
+                <div className="space-y-6">
+                  <div className="flex gap-4">
+                    <div className="w-10 h-10 rounded-full bg-blue-500 flex flex-shrink-0 items-center justify-center text-white font-medium">
+                      {user?.fullName?.charAt(0) || 'U'}
+                    </div>
+                    <div className="flex-1">
+                      <textarea
+                        className="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+                        placeholder="Add to the discussion..."
+                        rows={3}
+                      />
+                      <div className="flex justify-end mt-2">
+                        <Button variant="primary" size="sm">Post Comment</Button>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <p className="text-gray-500 text-center py-4">No comments yet. Be the first to start the discussion!</p>
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'editor' && (
+                <div className="space-y-4 bg-[#1e1e1e] p-4 rounded-lg border border-gray-700">
+                  <div className="flex justify-between items-center mb-2">
+                    <div className="flex gap-2">
+                      <Badge variant="success">JavaScript</Badge>
+                      <span className="text-gray-400 text-sm">Interactive Workspace</span>
+                    </div>
+                    <Button 
+                      variant="primary" 
+                      size="sm" 
+                      icon={<Play className="w-4 h-4" />}
+                      onClick={() => {
+                        try {
+                          // Simple safe eval for demonstration
+                          const log: string[] = [];
+                          const originalLog = console.log;
+                          console.log = (...args) => {
+                            log.push(args.join(' '));
+                          };
+                          // eslint-disable-next-line no-eval
+                          eval(ideCode);
+                          console.log = originalLog;
+                          setIdeOutput(log.join('\n') || 'Executed successfully (no output)');
+                        } catch (e: any) {
+                          setIdeOutput(`Error: ${e.message}`);
+                        }
+                      }}
+                    >
+                      Run Code
                     </Button>
                   </div>
-                  <div className="space-y-3">
-                    <p className="text-gray-500 text-center py-4">No discussions yet. Be the first to start a conversation!</p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <textarea
+                      className="w-full h-48 bg-[#0a0a0a] text-green-400 font-mono p-4 rounded-lg focus:outline-none focus:ring-1 focus:ring-green-500 resize-none"
+                      value={ideCode}
+                      onChange={(e) => setIdeCode(e.target.value)}
+                      spellCheck={false}
+                    />
+                    <div className="w-full h-48 bg-black text-gray-300 font-mono p-4 rounded-lg overflow-y-auto">
+                      <div className="text-gray-500 text-xs mb-2 border-b border-gray-800 pb-1">CONSOLE OUTPUT</div>
+                      <pre className="whitespace-pre-wrap">{ideOutput}</pre>
+                    </div>
                   </div>
                 </div>
               )}
@@ -829,6 +954,9 @@ export default function CourseLearnPage() {
           </motion.div>
         </motion.div>
       )}
+
+      {/* Floating AI Chat Assistant */}
+      <AIChat />
     </div>
   );
 }

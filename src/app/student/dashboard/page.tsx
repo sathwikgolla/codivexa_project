@@ -97,7 +97,7 @@ export default function StudentDashboard() {
       label: 'Certificates',
       value: certificates.length,
       icon: <Award className="w-6 h-6" />,
-      color: 'purple',
+      color: 'blue',
     },
     {
       label: 'Learning Hours',
@@ -372,7 +372,7 @@ export default function StudentDashboard() {
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <div className="w-2 h-2 bg-purple-600 rounded-full mt-2" />
+                      <div className="w-2 h-2 bg-blue-600 rounded-full mt-2" />
                       <div>
                         <p className="text-sm text-gray-900 dark:text-white">
                           Enrolled in "Advanced CSS"

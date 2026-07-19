@@ -54,7 +54,11 @@ class LocalStorageService {
 
   // User methods
   getUsers(): User[] {
-    return this.get<User>(STORAGE_KEYS.USERS);
+    const allUsers = this.get<User>(STORAGE_KEYS.USERS);
+    // Remove duplicates based on email
+    return allUsers.filter((user, index, self) => 
+      index === self.findIndex((u) => u.email === user.email)
+    );
   }
 
   getUserById(id: string): User | undefined {

@@ -7,3 +7,7 @@ export { ProgressBar } from './ProgressBar';
 export { Avatar } from './Avatar';
 export { Skeleton, CardSkeleton } from './Skeleton';
 export { CustomToast, Toaster } from './Toast';
+export { BackgroundBlobs } from './BackgroundBlobs';
+export { Logo } from './Logo';
+export { SplashScreen } from './SplashScreen';
+export { AIChat } from './AIChat';

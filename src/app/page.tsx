@@ -89,11 +89,11 @@ export default function Home() {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative isolate overflow-hidden px-4 pb-20 pt-32">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(99,102,241,0.16),_transparent_40%),radial-gradient(circle_at_top_right,_rgba(139,92,246,0.16),_transparent_35%),linear-gradient(135deg,_var(--background)_0%,_var(--muted)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(249,115,22,0.16),_transparent_40%),radial-gradient(circle_at_top_right,_rgba(37,99,235,0.16),_transparent_35%),linear-gradient(135deg,_var(--background)_0%,_var(--muted)_100%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_transparent_45%,_rgba(15,23,42,0.08)_100%)] dark:bg-[radial-gradient(circle_at_center,_transparent_0%,_transparent_45%,_rgba(248,250,252,0.08)_100%)]" />
-        <div className="absolute left-10 top-20 h-72 w-72 rounded-full bg-blue-400/20 blur-3xl" />
-        <div className="absolute right-10 top-20 h-72 w-72 rounded-full bg-purple-400/20 blur-3xl" />
-        <div className="absolute bottom-0 left-1/3 h-72 w-72 rounded-full bg-fuchsia-400/15 blur-3xl" />
+        <div className="absolute left-10 top-40 h-72 w-72 rounded-full bg-orange-400/20 blur-3xl" />
+        <div className="absolute right-10 top-20 h-72 w-72 rounded-full bg-blue-400/20 blur-3xl" />
+        <div className="absolute bottom-0 left-1/3 h-72 w-72 rounded-full bg-orange-400/15 blur-3xl" />
 
         <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center overflow-hidden">
           <div className="relative h-[60vw] max-h-[720px] w-[60vw] max-w-[720px] rounded-full">
@@ -118,7 +118,7 @@ export default function Home() {
             <Badge variant="info" className="mb-4">
               🎓 Start Learning Today
             </Badge>
-            <h1 className="mb-6 bg-gradient-to-r from-[color:var(--primary)] via-[color:var(--secondary)] to-fuchsia-500 bg-clip-text text-5xl font-bold text-transparent md:text-7xl">
+            <h1 className="mb-6 bg-gradient-to-r from-[color:var(--primary)] via-orange-500 to-blue-500 bg-clip-text text-5xl font-bold text-transparent md:text-7xl">
               Master New Skills with Codivexa
             </h1>
             <p className="mx-auto mb-8 max-w-3xl text-xl text-[color:var(--foreground)]/75 md:text-2xl">
@@ -152,7 +152,7 @@ export default function Home() {
               { label: 'Certificates', value: '25K+' },
             ].map((stat) => (
               <div key={stat.label} className="rounded-2xl border border-[color:var(--border)] bg-[color:var(--card)]/80 px-4 py-6 text-center shadow-[var(--shadow)]">
-                <div className="text-4xl font-bold bg-gradient-to-r from-[color:var(--primary)] to-[color:var(--secondary)] bg-clip-text text-transparent">
+                <div className="text-4xl font-bold bg-gradient-to-r from-orange-500 to-blue-600 bg-clip-text text-transparent">
                   {stat.value}
                 </div>
                 <div className="mt-2 text-[color:var(--foreground)]/70">{stat.label}</div>
@@ -218,7 +218,7 @@ export default function Home() {
                         {course.description}
                       </p>
                       <div className="flex items-center gap-2 mb-4">
-                        <Avatar fallback={course.instructorName} alt={course.instructorName} size="sm" />
+                        <Avatar alt={course.instructorName} size="sm" />
                         <span className="text-sm text-[color:var(--foreground)]/70">{course.instructorName}</span>
                       </div>
                       <div className="mb-4 flex items-center gap-4 text-sm text-[color:var(--foreground)]/70">
@@ -266,7 +266,7 @@ export default function Home() {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-900">
+      <section className="py-20 px-4 bg-gradient-to-br from-orange-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -288,8 +288,8 @@ export default function Home() {
                 transition={{ delay: index * 0.1 }}
               >
                 <Card glassmorphism className="h-full">
-                  <CardBody className="p-6 text-center">
-                    <div className="inline-flex p-4 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white mb-4">
+                  <CardBody className="p-8 text-center">
+                    <div className="inline-flex p-4 rounded-full bg-gradient-to-r from-orange-500 to-blue-600 text-white mb-4 shadow-lg shadow-orange-500/30">
                       {benefit.icon}
                     </div>
                     <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">{benefit.title}</h3>
@@ -348,7 +348,7 @@ export default function Home() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-gray-800 dark:to-gray-900">
+      <section className="py-20 px-4 bg-gradient-to-br from-blue-50 to-orange-50 dark:from-gray-800 dark:to-gray-900">
         <div className="max-w-3xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -385,7 +385,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 bg-gradient-to-r from-blue-600 to-purple-600">
+      <section className="py-20 px-4 bg-gradient-to-r from-orange-500 via-orange-400 to-blue-600 relative overflow-hidden">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
-import { Toaster } from "@/components/ui";
+import { Toaster, SplashScreen } from "@/components/ui";
 import { Navbar, Footer } from "@/components/layout";
 
 const geistSans = Geist({
@@ -56,6 +56,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-[var(--background)] text-[var(--foreground)] transition-colors duration-300">
         <ThemeProvider>
           <AuthProvider>
+            <SplashScreen />
             <Navbar />
             <main className="flex-1">{children}</main>
             <Footer />

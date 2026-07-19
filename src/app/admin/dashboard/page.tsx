@@ -9,7 +9,7 @@ import {
   Download, Calendar, PlusCircle, Check, PlayCircle, Key, Lock, Bell
 } from 'lucide-react';
 import { 
-  Button, Card, CardBody, Badge, Avatar, ProgressBar, Modal, Input, TextArea, Select 
+  Button, Card, CardBody, Badge, Avatar, ProgressBar, Modal, Input, TextArea, Select, Logo, BackgroundBlobs 
 } from '@/components/ui';
 import { localStorageService } from '@/services/localStorage';
 import { User, Course, Payment, Certificate, AssignmentSubmission, Student } from '@/types';
@@ -771,33 +771,14 @@ export default function AdminDashboard() {
   }, 0);
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-gray-100 font-sans">
+    <div className="flex min-h-screen bg-gray-50 text-gray-900 font-sans relative overflow-hidden">
+      <BackgroundBlobs />
       
       {/* 1. SIDEBAR PANEL */}
-      <aside className="w-64 bg-gray-800 border-r border-gray-700 flex flex-col justify-between p-6 shrink-0 text-white">
+      <aside className="w-64 bg-white backdrop-blur-md border-r border-gray-200 flex flex-col justify-between p-6 shrink-0 text-gray-900 relative z-10">
         <div>
-          <div className="flex flex-col items-center mb-8 border-b border-gray-700/50 pb-6 w-full">
-            <img 
-              src="/logo.png" 
-              alt="Codivexa Logo" 
-              className="w-full h-auto max-h-16 object-contain"
-              onError={(e) => {
-                e.currentTarget.style.display = 'none';
-                const parent = e.currentTarget.parentElement;
-                if (parent) {
-                  const fallback = parent.querySelector('.fallback-logo');
-                  if (fallback) fallback.classList.remove('hidden');
-                }
-              }}
-            />
-            <div className="fallback-logo hidden flex items-center space-x-3">
-              <div className="bg-gradient-to-r from-red-600 to-indigo-600 p-2 rounded-lg">
-                <Shield className="w-6 h-6 text-white" />
-              </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-red-400 to-indigo-400 bg-clip-text text-transparent">
-                {platformName}
-              </span>
-            </div>
+          <div className="flex flex-col items-center mb-8 border-b border-gray-200/50 pb-6 w-full pt-2">
+            <Logo />
           </div>
 
           <nav className="space-y-2">
@@ -819,8 +800,8 @@ export default function AdminDashboard() {
                   onClick={() => { setSidebarTab(tab.id as any); setSearchQuery(''); }}
                   className={`w-full flex items-center space-x-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
                     isActive 
-                      ? 'bg-gradient-to-r from-red-600/30 to-indigo-600/30 border-l-4 border-red-500 text-white' 
-                      : 'text-gray-400 hover:bg-gray-700/50 hover:text-white'
+                      ? 'bg-gradient-to-r from-red-600/30 to-orange-600/30 border-l-4 border-orange-500 text-orange-600' 
+                      : 'text-gray-500 hover:bg-gray-50/50 hover:text-gray-900'
                   }`}
                 >
                   <Icon className="w-5 h-5" />
@@ -831,19 +812,19 @@ export default function AdminDashboard() {
           </nav>
         </div>
 
-        <div className="border-t border-gray-700 pt-6">
+        <div className="border-t border-gray-200 pt-6">
           <div className="flex items-center space-x-3 mb-4">
-            <div className="w-9 h-9 rounded-full bg-indigo-600 flex items-center justify-center font-bold text-white">
+            <div className="w-9 h-9 rounded-full bg-orange-600 flex items-center justify-center font-bold text-gray-900">
               SK
             </div>
             <div>
-              <p className="text-sm font-semibold text-white">Sanjana Kasarla</p>
-              <p className="text-xs text-gray-400">Super Administrator</p>
+              <p className="text-sm font-semibold text-gray-900">Sanjana Kasarla</p>
+              <p className="text-xs text-gray-500">Super Administrator</p>
             </div>
           </div>
           <button 
             onClick={handleLogout}
-            className="w-full flex items-center justify-center space-x-2 bg-red-600/10 hover:bg-red-600 hover:text-white border border-red-500/20 text-red-400 py-2.5 rounded-lg text-sm font-medium transition-all"
+            className="w-full flex items-center justify-center space-x-2 bg-red-600/10 hover:bg-red-600 hover:text-gray-900 border border-red-500/20 text-red-400 py-2.5 rounded-lg text-sm font-medium transition-all"
           >
             <LogOut className="w-4 h-4" />
             <span>Sign Out</span>
@@ -852,23 +833,23 @@ export default function AdminDashboard() {
       </aside>
 
       {/* MAIN CONTAINER */}
-      <main className="flex-1 overflow-y-auto p-8 bg-gray-900">
+      <main className="flex-1 overflow-y-auto p-8 bg-transparent relative z-10">
         
         {/* Header HUD */}
-        <header className="flex justify-between items-center mb-8 pb-6 border-b border-gray-800">
+        <header className="flex justify-between items-center mb-8 pb-6 border-b border-gray-200">
           <div>
-            <h1 className="text-3xl font-extrabold text-white capitalize">{sidebarTab} Control</h1>
-            <p className="text-sm text-gray-400 mt-2">Manage settings, platform curriculums, and analyze real-time conversions.</p>
+            <h1 className="text-3xl font-extrabold text-gray-900 capitalize">{sidebarTab} Control</h1>
+            <p className="text-sm text-gray-500 mt-2">Manage settings, platform curriculums, and analyze real-time conversions.</p>
           </div>
           
           <div className="flex items-center space-x-4">
-            <button className="relative p-2 bg-gray-800 hover:bg-gray-700 rounded-lg text-gray-400 hover:text-white transition-all">
+            <button className="relative p-2 bg-white hover:bg-gray-50 rounded-lg text-gray-500 hover:text-gray-900 transition-all">
               <Bell className="w-5 h-5" />
               {submissions.filter(s => s.status === 'pending').length > 0 && (
                 <span className="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full"></span>
               )}
             </button>
-            <div className="text-xs bg-gray-800 border border-gray-700 px-3 py-1.5 rounded-lg text-gray-400">
+            <div className="text-xs bg-white border border-gray-200 px-3 py-1.5 rounded-lg text-gray-500">
               IP Sandbox Mode
             </div>
           </div>
@@ -881,17 +862,17 @@ export default function AdminDashboard() {
               {[
                 { label: 'Total Enrolled Students', value: totalEnrollments, icon: Users, color: 'text-blue-400', bg: 'bg-blue-500/10' },
                 { label: 'Active Courses Catalog', value: activeCoursesCount, icon: BookOpen, color: 'text-green-400', bg: 'bg-green-500/10' },
-                { label: 'Total Successful Charges', value: `$${totalRevenue.toLocaleString()}`, icon: DollarSign, color: 'text-indigo-400', bg: 'bg-indigo-500/10' },
+                { label: 'Total Successful Charges', value: `$${totalRevenue.toLocaleString()}`, icon: DollarSign, color: 'text-orange-400', bg: 'bg-orange-500/10' },
                 { label: 'Assessment Passing Rate', value: `${passPercentage}%`, icon: CheckCircle, color: 'text-amber-400', bg: 'bg-amber-500/10' },
               ].map((card, idx) => {
                 const Icon = card.icon;
                 return (
-                  <Card key={idx} className="border-gray-800 bg-gray-800/50">
+                  <Card key={idx} className="border-gray-200 bg-white/50">
                     <CardBody className="p-6">
                       <div className="flex items-center justify-between">
                         <div>
-                          <p className="text-xs font-semibold uppercase tracking-wider text-gray-400">{card.label}</p>
-                          <p className="text-3xl font-extrabold text-white mt-3">{card.value}</p>
+                          <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">{card.label}</p>
+                          <p className="text-3xl font-extrabold text-gray-900 mt-3">{card.value}</p>
                         </div>
                         <div className={`p-4 rounded-xl ${card.bg}`}>
                           <Icon className={`w-6 h-6 ${card.color}`} />
@@ -904,20 +885,20 @@ export default function AdminDashboard() {
             </div>
 
             {/* Quick action buttons */}
-            <Card className="border-gray-800 bg-gray-800/40">
+            <Card className="border-gray-200 bg-white/40">
               <CardBody className="p-6 flex flex-wrap gap-4 items-center justify-between">
                 <div>
-                  <h3 className="text-base font-bold text-white">Curriculum & Registration Actions:</h3>
-                  <p className="text-xs text-gray-400 mt-1">Quick links to update LMS configurations.</p>
+                  <h3 className="text-base font-bold text-gray-900">Curriculum & Registration Actions:</h3>
+                  <p className="text-xs text-gray-500 mt-1">Quick links to update LMS configurations.</p>
                 </div>
                 <div className="flex gap-3">
-                  <Button variant="outline" size="sm" className="bg-gray-800 border-gray-700 text-white" onClick={() => setIsAddCourseOpen(true)}>
+                  <Button variant="outline" size="sm" className="bg-white border-gray-200 text-gray-900" onClick={() => setIsAddCourseOpen(true)}>
                     + Create Course
                   </Button>
-                  <Button variant="outline" size="sm" className="bg-gray-800 border-gray-700 text-white" onClick={() => setIsAddStudentOpen(true)}>
+                  <Button variant="outline" size="sm" className="bg-white border-gray-200 text-gray-900" onClick={() => setIsAddStudentOpen(true)}>
                     + Register Student
                   </Button>
-                  <Button variant="outline" size="sm" className="bg-gray-800 border-gray-700 text-white" onClick={() => { setSidebarTab('assessments'); }}>
+                  <Button variant="outline" size="sm" className="bg-white border-gray-200 text-gray-900" onClick={() => { setSidebarTab('assessments'); }}>
                     Grade Assignments
                   </Button>
                 </div>
@@ -926,21 +907,21 @@ export default function AdminDashboard() {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Distribution */}
-              <Card className="border-gray-800 bg-gray-800/40">
+              <Card className="border-gray-200 bg-white/40">
                 <CardBody className="p-6">
-                  <h3 className="text-base font-bold text-white mb-6">User Distribution Ratio</h3>
+                  <h3 className="text-base font-bold text-gray-900 mb-6">User Distribution Ratio</h3>
                   <div className="space-y-5">
                     <div>
-                      <div className="flex justify-between text-sm text-gray-300 mb-2">
+                      <div className="flex justify-between text-sm text-gray-700 mb-2">
                         <span>Students</span>
-                        <span className="font-semibold text-white">{studentCount} ({Math.round(studentCount / Math.max(1, users.length) * 100)}%)</span>
+                        <span className="font-semibold text-gray-900">{studentCount} ({Math.round(studentCount / Math.max(1, users.length) * 100)}%)</span>
                       </div>
                       <ProgressBar value={(studentCount / Math.max(1, users.length)) * 100} color="blue" />
                     </div>
                     <div>
-                      <div className="flex justify-between text-sm text-gray-300 mb-2">
+                      <div className="flex justify-between text-sm text-gray-700 mb-2">
                         <span>Instructors</span>
-                        <span className="font-semibold text-white">{users.filter(u => u.role === 'instructor').length}</span>
+                        <span className="font-semibold text-gray-900">{users.filter(u => u.role === 'instructor').length}</span>
                       </div>
                       <ProgressBar value={(users.filter(u => u.role === 'instructor').length / Math.max(1, users.length)) * 100} color="yellow" />
                     </div>
@@ -949,13 +930,13 @@ export default function AdminDashboard() {
               </Card>
 
               {/* Recent activity */}
-              <Card className="border-gray-800 bg-gray-800/40">
+              <Card className="border-gray-200 bg-white/40">
                 <CardBody className="p-6">
-                  <h3 className="text-base font-bold text-white mb-6">Security Events Feed</h3>
+                  <h3 className="text-base font-bold text-gray-900 mb-6">Security Events Feed</h3>
                   <div className="space-y-4 max-h-[160px] overflow-y-auto pr-2">
                     {auditLogs.slice(0, 4).map(log => (
                       <div key={log.id} className="flex items-start space-x-3 text-sm">
-                        <div className="w-2 h-2 bg-indigo-500 rounded-full mt-2 shrink-0"></div>
+                        <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 shrink-0"></div>
                         <div className="flex-1">
                           <p className="text-gray-200">{log.action}</p>
                           <p className="text-xs text-gray-500 mt-1">{log.timestamp} | {log.user}</p>
@@ -976,22 +957,22 @@ export default function AdminDashboard() {
               <div className="relative w-80">
                 <input 
                   type="text" 
-                  className="w-full bg-gray-800 text-white pl-10 pr-4 py-2 border border-gray-700 rounded-lg text-sm focus:outline-none focus:border-indigo-500 transition-all"
+                  className="w-full bg-white text-gray-900 pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-orange-500 transition-all"
                   placeholder="Search by student email or name..." 
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
-                <span className="absolute left-3.5 top-2.5 text-gray-400">🔍</span>
+                <span className="absolute left-3.5 top-2.5 text-gray-500">🔍</span>
               </div>
               <Button variant="primary" size="sm" onClick={() => setIsAddStudentOpen(true)}>
                 + Add Student
               </Button>
             </div>
 
-            <Card className="border-gray-800 bg-gray-800/40 overflow-hidden">
+            <Card className="border-gray-200 bg-white/40 overflow-hidden">
               <div className="overflow-x-auto">
-                <table className="w-full text-left text-sm text-gray-300">
-                  <thead className="bg-gray-800/80 text-gray-400 border-b border-gray-700 uppercase tracking-wider text-xs">
+                <table className="w-full text-left text-sm text-gray-700">
+                  <thead className="bg-white/80 text-gray-500 border-b border-gray-200 uppercase tracking-wider text-xs">
                     <tr>
                       <th className="py-4 px-6">Name / Details</th>
                       <th className="py-4 px-6">Enrolled Modules</th>
@@ -1001,20 +982,20 @@ export default function AdminDashboard() {
                   </thead>
                   <tbody className="divide-y divide-gray-800">
                     {filteredStudentsList.map((student) => (
-                      <tr key={student.id} className="hover:bg-gray-800/40 transition-all cursor-pointer" onClick={() => handleOpenStudentDetails(student)}>
+                      <tr key={student.id} className="hover:bg-white/40 transition-all cursor-pointer" onClick={() => handleOpenStudentDetails(student)}>
                         <td className="py-4 px-6">
                           <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 rounded-full bg-indigo-600/20 text-indigo-400 flex items-center justify-center font-bold">
+                            <div className="w-9 h-9 rounded-full bg-orange-600/20 text-orange-400 flex items-center justify-center font-bold">
                               {student.fullName[0].toUpperCase()}
                             </div>
                             <div>
-                              <p className="font-semibold text-white">{student.fullName}</p>
+                              <p className="font-semibold text-gray-900">{student.fullName}</p>
                               <p className="text-xs text-gray-500">{student.email} | {student.mobile}</p>
                             </div>
                           </div>
                         </td>
                         <td className="py-4 px-6">
-                          <Badge variant="default" className="bg-indigo-500/10 text-indigo-400 border-0">
+                          <Badge variant="default" className="bg-orange-500/10 text-orange-400 border-0">
                             {(student as Student).enrolledCourses?.length || 0} Modules
                           </Badge>
                         </td>
@@ -1052,17 +1033,17 @@ export default function AdminDashboard() {
               <div className="relative w-80">
                 <input 
                   type="text" 
-                  className="w-full bg-gray-800 text-white pl-10 pr-4 py-2 border border-gray-700 rounded-lg text-sm focus:outline-none focus:border-indigo-500 transition-all"
+                  className="w-full bg-white text-gray-900 pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-orange-500 transition-all"
                   placeholder="Search courses..." 
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
-                <span className="absolute left-3.5 top-2.5 text-gray-400">🔍</span>
+                <span className="absolute left-3.5 top-2.5 text-gray-500">🔍</span>
               </div>
               
               <div className="flex gap-4">
                 <select 
-                  className="bg-gray-800 text-white border border-gray-700 rounded-lg px-3 py-1.5 text-sm"
+                  className="bg-white text-gray-900 border border-gray-200 rounded-lg px-3 py-1.5 text-sm"
                   value={courseFilter}
                   onChange={e => setCourseFilter(e.target.value)}
                 >
@@ -1080,26 +1061,26 @@ export default function AdminDashboard() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {filteredCoursesList.map((course) => (
-                <Card key={course.id} className="border-gray-800 bg-gray-800/40 overflow-hidden flex flex-col justify-between">
+                <Card key={course.id} className="border-gray-200 bg-white/40 overflow-hidden flex flex-col justify-between">
                   <div className="p-6">
                     <div className="flex items-center gap-4 mb-4">
-                      <div className="w-16 h-12 rounded bg-indigo-500/10 text-indigo-400 flex items-center justify-center font-bold">
+                      <div className="w-16 h-12 rounded bg-orange-500/10 text-orange-400 flex items-center justify-center font-bold">
                         <PlayCircle className="w-6 h-6" />
                       </div>
                       <div>
-                        <h4 className="font-bold text-white text-base">{course.title}</h4>
+                        <h4 className="font-bold text-gray-900 text-base">{course.title}</h4>
                         <p className="text-xs text-gray-500 capitalize">{course.category} | {course.difficulty}</p>
                       </div>
                     </div>
-                    <p className="text-xs text-gray-400 line-clamp-2 mb-4">{course.description}</p>
+                    <p className="text-xs text-gray-500 line-clamp-2 mb-4">{course.description}</p>
                     
                     <div className="flex justify-between items-center text-xs text-gray-500">
                       <span>Curriculum: {course.lessons?.length || 0} Lectures</span>
-                      <span className="font-bold text-white text-sm">${course.price}</span>
+                      <span className="font-bold text-gray-900 text-sm">${course.price}</span>
                     </div>
                   </div>
 
-                  <div className="bg-gray-800/80 border-t border-gray-700/50 px-6 py-3.5 flex justify-between items-center">
+                  <div className="bg-white/80 border-t border-gray-200/50 px-6 py-3.5 flex justify-between items-center">
                     <Badge variant={course.published ? 'success' : 'warning'}>
                       {course.published ? 'Published' : 'Draft'}
                     </Badge>
@@ -1121,14 +1102,14 @@ export default function AdminDashboard() {
         {/* 5. ASSESSMENTS PANEL */}
         {sidebarTab === 'assessments' && (
           <div className="space-y-6">
-            <div className="flex justify-between items-center gap-4 flex-wrap border-b border-gray-800 pb-4">
+            <div className="flex justify-between items-center gap-4 flex-wrap border-b border-gray-200 pb-4">
               <div className="flex gap-6">
                 <button 
                   onClick={() => setAssessSubTab('configs')}
                   className={`text-sm font-semibold pb-2 px-1 transition-all ${
                     assessSubTab === 'configs' 
-                      ? 'border-b-2 border-indigo-500 text-white' 
-                      : 'text-gray-400 hover:text-white'
+                      ? 'border-b-2 border-orange-500 text-orange-600' 
+                      : 'text-gray-500 hover:text-gray-900'
                   }`}
                 >
                   Assessment Submissions Log
@@ -1137,8 +1118,8 @@ export default function AdminDashboard() {
                   onClick={() => setAssessSubTab('queue')}
                   className={`text-sm font-semibold pb-2 px-1 transition-all flex items-center gap-2 ${
                     assessSubTab === 'queue' 
-                      ? 'border-b-2 border-indigo-500 text-white' 
-                      : 'text-gray-400 hover:text-white'
+                      ? 'border-b-2 border-orange-500 text-orange-600' 
+                      : 'text-gray-500 hover:text-gray-900'
                   }`}
                 >
                   Pending Evaluations Queue
@@ -1155,21 +1136,21 @@ export default function AdminDashboard() {
               <div className="relative w-80">
                 <input 
                   type="text" 
-                  className="w-full bg-gray-800 text-white pl-10 pr-4 py-2 border border-gray-700 rounded-lg text-sm focus:outline-none focus:border-indigo-500 transition-all"
+                  className="w-full bg-white text-gray-900 pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-orange-500 transition-all"
                   placeholder="Search submissions by student or course..." 
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
-                <span className="absolute left-3.5 top-2.5 text-gray-400">🔍</span>
+                <span className="absolute left-3.5 top-2.5 text-gray-500">🔍</span>
               </div>
             </div>
 
             {/* Submissions Log (Tab 1) */}
             {assessSubTab === 'configs' && (
-              <Card className="border-gray-800 bg-gray-800/40 overflow-hidden">
+              <Card className="border-gray-200 bg-white/40 overflow-hidden">
                 <div className="overflow-x-auto">
-                  <table className="w-full text-left text-sm text-gray-300">
-                    <thead className="bg-gray-800/80 text-gray-400 border-b border-gray-700 uppercase tracking-wider text-xs">
+                  <table className="w-full text-left text-sm text-gray-700">
+                    <thead className="bg-white/80 text-gray-500 border-b border-gray-200 uppercase tracking-wider text-xs">
                       <tr>
                         <th className="py-4 px-6">Student Name</th>
                         <th className="py-4 px-6">Course Module</th>
@@ -1181,15 +1162,15 @@ export default function AdminDashboard() {
                     </thead>
                     <tbody className="divide-y divide-gray-800">
                       {filteredSubmissionsList.map((sub) => (
-                        <tr key={sub.id} className="hover:bg-gray-800/40 transition-all">
-                          <td className="py-4 px-6 font-semibold text-white">
+                        <tr key={sub.id} className="hover:bg-white/40 transition-all">
+                          <td className="py-4 px-6 font-semibold text-gray-900">
                             {users.find(u => u.id === sub.studentId)?.fullName || 'Real Student'}
                           </td>
-                          <td className="py-4 px-6 text-gray-400">
+                          <td className="py-4 px-6 text-gray-500">
                             {courses.find(c => c.id === sub.courseId)?.title || 'Course'}
                           </td>
                           <td className="py-4 px-6">
-                            <div className="flex items-center space-x-2 text-indigo-400 text-xs">
+                            <div className="flex items-center space-x-2 text-orange-400 text-xs">
                               <FileText className="w-4 h-4" />
                               <span className="underline cursor-pointer" onClick={() => alert(`Downloading document: ${sub.files[0]?.title}`)}>
                                 {sub.files[0]?.title || 'submission_project.zip'}
@@ -1227,10 +1208,10 @@ export default function AdminDashboard() {
 
             {/* Submissions Queue (Tab 2) */}
             {assessSubTab === 'queue' && (
-              <Card className="border-gray-800 bg-gray-800/40 overflow-hidden">
+              <Card className="border-gray-200 bg-white/40 overflow-hidden">
                 <div className="overflow-x-auto">
-                  <table className="w-full text-left text-sm text-gray-300">
-                    <thead className="bg-gray-800/80 text-gray-400 border-b border-gray-700 uppercase tracking-wider text-xs">
+                  <table className="w-full text-left text-sm text-gray-700">
+                    <thead className="bg-white/80 text-gray-500 border-b border-gray-200 uppercase tracking-wider text-xs">
                       <tr>
                         <th className="py-4 px-6">Student Name</th>
                         <th className="py-4 px-6">Course Module</th>
@@ -1241,15 +1222,15 @@ export default function AdminDashboard() {
                     </thead>
                     <tbody className="divide-y divide-gray-800">
                       {pendingSubmissions.map((sub) => (
-                        <tr key={sub.id} className="hover:bg-gray-800/40 transition-all">
-                          <td className="py-4 px-6 font-semibold text-white">
+                        <tr key={sub.id} className="hover:bg-white/40 transition-all">
+                          <td className="py-4 px-6 font-semibold text-gray-900">
                             {users.find(u => u.id === sub.studentId)?.fullName || 'Real Student'}
                           </td>
-                          <td className="py-4 px-6 text-gray-400">
+                          <td className="py-4 px-6 text-gray-500">
                             {courses.find(c => c.id === sub.courseId)?.title || 'Course'}
                           </td>
                           <td className="py-4 px-6">
-                            <div className="flex items-center space-x-2 text-indigo-400 text-xs">
+                            <div className="flex items-center space-x-2 text-orange-400 text-xs">
                               <FileText className="w-4 h-4" />
                               <span className="underline cursor-pointer" onClick={() => alert(`Downloading document: ${sub.files[0]?.title}`)}>
                                 {sub.files[0]?.title || 'submission_project.zip'}
@@ -1287,14 +1268,14 @@ export default function AdminDashboard() {
         {/* 6. CERTIFICATES PANEL */}
         {sidebarTab === 'certificates' && (
           <div className="space-y-6">
-            <div className="flex justify-between items-center gap-4 flex-wrap border-b border-gray-800 pb-4">
+            <div className="flex justify-between items-center gap-4 flex-wrap border-b border-gray-200 pb-4">
               <div className="flex gap-6">
                 <button 
                   onClick={() => setCertSubTab('ledger')}
                   className={`text-sm font-semibold pb-2 px-1 transition-all ${
                     certSubTab === 'ledger' 
-                      ? 'border-b-2 border-indigo-500 text-white' 
-                      : 'text-gray-400 hover:text-white'
+                      ? 'border-b-2 border-orange-500 text-orange-600' 
+                      : 'text-gray-500 hover:text-gray-900'
                   }`}
                 >
                   Certificate Ledger
@@ -1303,8 +1284,8 @@ export default function AdminDashboard() {
                   onClick={() => setCertSubTab('requests')}
                   className={`text-sm font-semibold pb-2 px-1 transition-all flex items-center gap-2 ${
                     certSubTab === 'requests' 
-                      ? 'border-b-2 border-indigo-500 text-white' 
-                      : 'text-gray-400 hover:text-white'
+                      ? 'border-b-2 border-orange-500 text-orange-600' 
+                      : 'text-gray-500 hover:text-gray-900'
                   }`}
                 >
                   Approval Requests Queue
@@ -1324,20 +1305,20 @@ export default function AdminDashboard() {
               <div className="relative w-80">
                 <input 
                   type="text" 
-                  className="w-full bg-gray-800 text-white pl-10 pr-4 py-2 border border-gray-700 rounded-lg text-sm focus:outline-none focus:border-indigo-500 transition-all"
+                  className="w-full bg-white text-gray-900 pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-orange-500 transition-all"
                   placeholder={certSubTab === 'ledger' ? "Search approved certificates..." : "Search certificate requests..."}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
-                <span className="absolute left-3.5 top-2.5 text-gray-400">🔍</span>
+                <span className="absolute left-3.5 top-2.5 text-gray-500">🔍</span>
               </div>
             </div>
 
             {certSubTab === 'ledger' ? (
-              <Card className="border-gray-800 bg-gray-800/40 overflow-hidden">
+              <Card className="border-gray-200 bg-white/40 overflow-hidden">
                 <div className="overflow-x-auto">
-                  <table className="w-full text-left text-sm text-gray-300">
-                    <thead className="bg-gray-800/80 text-gray-400 border-b border-gray-700 uppercase tracking-wider text-xs">
+                  <table className="w-full text-left text-sm text-gray-700">
+                    <thead className="bg-white/80 text-gray-500 border-b border-gray-200 uppercase tracking-wider text-xs">
                       <tr>
                         <th className="py-4 px-6">Certificate ID</th>
                         <th className="py-4 px-6">Student Name</th>
@@ -1348,14 +1329,14 @@ export default function AdminDashboard() {
                     </thead>
                     <tbody className="divide-y divide-gray-800">
                       {filteredCertsList.map((cert) => (
-                        <tr key={cert.id} className="hover:bg-gray-800/40 transition-all">
-                          <td className="py-4 px-6 font-mono text-xs text-white font-bold">{cert.certificateId}</td>
+                        <tr key={cert.id} className="hover:bg-white/40 transition-all">
+                          <td className="py-4 px-6 font-mono text-xs text-gray-900 font-bold">{cert.certificateId}</td>
                           <td className="py-4 px-6">{cert.studentName}</td>
-                          <td className="py-4 px-6 text-gray-400">{cert.courseName}</td>
+                          <td className="py-4 px-6 text-gray-500">{cert.courseName}</td>
                           <td className="py-4 px-6">{new Date(cert.completionDate).toLocaleDateString()}</td>
                           <td className="py-4 px-6 text-right">
                             <div className="flex gap-2 justify-end">
-                              <Button variant="ghost" size="sm" icon={<Eye className="w-4 h-4 text-indigo-400" />} onClick={() => setSelectedViewCert(cert)} />
+                              <Button variant="ghost" size="sm" icon={<Eye className="w-4 h-4 text-orange-400" />} onClick={() => setSelectedViewCert(cert)} />
                               <Button variant="ghost" size="sm" icon={<Trash2 className="w-4 h-4 text-red-500" />} onClick={() => setCertRevokeModal(cert)} />
                             </div>
                           </td>
@@ -1371,10 +1352,10 @@ export default function AdminDashboard() {
                 </div>
               </Card>
             ) : (
-              <Card className="border-gray-800 bg-gray-800/40 overflow-hidden">
+              <Card className="border-gray-200 bg-white/40 overflow-hidden">
                 <div className="overflow-x-auto">
-                  <table className="w-full text-left text-sm text-gray-300">
-                    <thead className="bg-gray-800/80 text-gray-400 border-b border-gray-700 uppercase tracking-wider text-xs">
+                  <table className="w-full text-left text-sm text-gray-700">
+                    <thead className="bg-white/80 text-gray-500 border-b border-gray-200 uppercase tracking-wider text-xs">
                       <tr>
                         <th className="py-4 px-6">Certificate ID</th>
                         <th className="py-4 px-6">Student Name</th>
@@ -1385,17 +1366,17 @@ export default function AdminDashboard() {
                     </thead>
                     <tbody className="divide-y divide-gray-800">
                       {filteredCertRequests.map((cert) => (
-                        <tr key={cert.id} className="hover:bg-gray-800/40 transition-all">
-                          <td className="py-4 px-6 font-mono text-xs text-white font-bold">{cert.certificateId}</td>
+                        <tr key={cert.id} className="hover:bg-white/40 transition-all">
+                          <td className="py-4 px-6 font-mono text-xs text-gray-900 font-bold">{cert.certificateId}</td>
                           <td className="py-4 px-6">{cert.studentName}</td>
-                          <td className="py-4 px-6 text-gray-400">{cert.courseName}</td>
+                          <td className="py-4 px-6 text-gray-500">{cert.courseName}</td>
                           <td className="py-4 px-6">{new Date(cert.completionDate).toLocaleDateString()}</td>
                           <td className="py-4 px-6 text-right">
                             <div className="flex gap-2 justify-end">
                               <Button 
                                 variant="outline" 
                                 size="sm" 
-                                className="text-green-400 border-green-500/30 hover:bg-green-500 hover:text-white" 
+                                className="text-green-400 border-green-500/30 hover:bg-green-500 hover:text-gray-900" 
                                 onClick={() => handleApproveCert(cert.id)}
                               >
                                 Approve
@@ -1403,7 +1384,7 @@ export default function AdminDashboard() {
                               <Button 
                                 variant="outline" 
                                 size="sm" 
-                                className="text-red-400 border-red-500/30 hover:bg-red-500 hover:text-white" 
+                                className="text-red-400 border-red-500/30 hover:bg-red-500 hover:text-gray-900" 
                                 onClick={() => handleRejectCert(cert.id)}
                               >
                                 Reject
@@ -1432,17 +1413,17 @@ export default function AdminDashboard() {
               <div className="relative w-80">
                 <input 
                   type="text" 
-                  className="w-full bg-gray-800 text-white pl-10 pr-4 py-2 border border-gray-700 rounded-lg text-sm focus:outline-none focus:border-indigo-500 transition-all"
+                  className="w-full bg-white text-gray-900 pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-orange-500 transition-all"
                   placeholder="Search transactions by student ID..." 
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
-                <span className="absolute left-3.5 top-2.5 text-gray-400">🔍</span>
+                <span className="absolute left-3.5 top-2.5 text-gray-500">🔍</span>
               </div>
 
               <div className="flex gap-4">
                 <select 
-                  className="bg-gray-800 text-white border border-gray-700 rounded-lg px-3 py-1.5 text-sm"
+                  className="bg-white text-gray-900 border border-gray-200 rounded-lg px-3 py-1.5 text-sm"
                   value={statusFilter}
                   onChange={e => setStatusFilter(e.target.value)}
                 >
@@ -1451,16 +1432,16 @@ export default function AdminDashboard() {
                   <option value="Refunded">Refunded</option>
                   <option value="Failed">Failed</option>
                 </select>
-                <Button variant="outline" size="sm" className="bg-gray-800 border-gray-700 text-white flex gap-2" onClick={handleExportCSV}>
+                <Button variant="outline" size="sm" className="bg-white border-gray-200 text-gray-900 flex gap-2" onClick={handleExportCSV}>
                   <Download className="w-4 h-4" /> Export CSV
                 </Button>
               </div>
             </div>
 
-            <Card className="border-gray-800 bg-gray-800/40 overflow-hidden">
+            <Card className="border-gray-200 bg-white/40 overflow-hidden">
               <div className="overflow-x-auto">
-                <table className="w-full text-left text-sm text-gray-300">
-                  <thead className="bg-gray-800/80 text-gray-400 border-b border-gray-700 uppercase tracking-wider text-xs">
+                <table className="w-full text-left text-sm text-gray-700">
+                  <thead className="bg-white/80 text-gray-500 border-b border-gray-200 uppercase tracking-wider text-xs">
                     <tr>
                       <th className="py-4 px-6">Transaction ID</th>
                       <th className="py-4 px-6">Student ID</th>
@@ -1473,9 +1454,9 @@ export default function AdminDashboard() {
                   </thead>
                   <tbody className="divide-y divide-gray-800">
                     {filteredPaymentsList.map((pay) => (
-                      <tr key={pay.id} className="hover:bg-gray-800/40 transition-all">
-                        <td className="py-4 px-6 font-mono text-xs text-white font-bold">{pay.transactionId}</td>
-                        <td className="py-4 px-6 text-xs text-gray-400">{pay.studentId}</td>
+                      <tr key={pay.id} className="hover:bg-white/40 transition-all">
+                        <td className="py-4 px-6 font-mono text-xs text-gray-900 font-bold">{pay.transactionId}</td>
+                        <td className="py-4 px-6 text-xs text-gray-500">{pay.studentId}</td>
                         <td className="py-4 px-6">{courses.find(c => c.id === pay.courseId)?.title || 'React Programming'}</td>
                         <td className="py-4 px-6 font-bold">${pay.amount}</td>
                         <td className="py-4 px-6 uppercase text-xs text-gray-500">{pay.method}</td>
@@ -1486,7 +1467,7 @@ export default function AdminDashboard() {
                         </td>
                         <td className="py-4 px-6 text-right">
                           <div className="flex gap-2 justify-end">
-                            <Button variant="ghost" size="sm" icon={<FileText className="w-4 h-4 text-gray-400" />} onClick={() => setSelectedInvoice(pay)} />
+                            <Button variant="ghost" size="sm" icon={<FileText className="w-4 h-4 text-gray-500" />} onClick={() => setSelectedInvoice(pay)} />
                             {pay.status === 'completed' && (
                               <Button variant="ghost" size="sm" icon={<ArrowLeftRight className="w-4 h-4 text-amber-500" />} onClick={() => handleRefundPayment(pay)} title="Refund transaction" />
                             )}
@@ -1511,11 +1492,11 @@ export default function AdminDashboard() {
           <div className="space-y-8">
             <div className="flex justify-between items-center">
               <div>
-                <h3 className="text-lg font-bold text-white">Platform Revenue dashboard</h3>
-                <p className="text-xs text-gray-400 mt-1">Timeline filtered statistics.</p>
+                <h3 className="text-lg font-bold text-gray-900">Platform Revenue dashboard</h3>
+                <p className="text-xs text-gray-500 mt-1">Timeline filtered statistics.</p>
               </div>
               <select 
-                className="bg-gray-800 text-white border border-gray-700 rounded-lg px-3 py-1.5 text-sm"
+                className="bg-white text-gray-900 border border-gray-200 rounded-lg px-3 py-1.5 text-sm"
                 value={revenueTimeframe}
                 onChange={e => setRevenueTimeframe(e.target.value)}
               >
@@ -1526,30 +1507,30 @@ export default function AdminDashboard() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Card className="border-gray-800 bg-gray-800/40">
+              <Card className="border-gray-200 bg-white/40">
                 <CardBody className="p-6">
-                  <p className="text-xs text-gray-400 uppercase font-semibold">Total Revenue (Successful charges)</p>
-                  <p className="text-3xl font-extrabold text-white mt-3">${timelineRevenue.toLocaleString()}</p>
+                  <p className="text-xs text-gray-500 uppercase font-semibold">Total Revenue (Successful charges)</p>
+                  <p className="text-3xl font-extrabold text-gray-900 mt-3">${timelineRevenue.toLocaleString()}</p>
                 </CardBody>
               </Card>
-              <Card className="border-gray-800 bg-gray-800/40">
+              <Card className="border-gray-200 bg-white/40">
                 <CardBody className="p-6">
-                  <p className="text-xs text-gray-400 uppercase font-semibold">Monthly Recurring Revenue (MRR)</p>
-                  <p className="text-3xl font-extrabold text-white mt-3">${computedMRR.toLocaleString()}</p>
+                  <p className="text-xs text-gray-500 uppercase font-semibold">Monthly Recurring Revenue (MRR)</p>
+                  <p className="text-3xl font-extrabold text-gray-900 mt-3">${computedMRR.toLocaleString()}</p>
                 </CardBody>
               </Card>
-              <Card className="border-gray-800 bg-gray-800/40">
+              <Card className="border-gray-200 bg-white/40">
                 <CardBody className="p-6">
-                  <p className="text-xs text-gray-400 uppercase font-semibold">Avg. Revenue per student (ARPU)</p>
-                  <p className="text-3xl font-extrabold text-white mt-3">${arpu.toFixed(2)}</p>
+                  <p className="text-xs text-gray-500 uppercase font-semibold">Avg. Revenue per student (ARPU)</p>
+                  <p className="text-3xl font-extrabold text-gray-900 mt-3">${arpu.toFixed(2)}</p>
                 </CardBody>
               </Card>
             </div>
 
             {/* Graphs fallback message / list of sales since custom charts may require more data */}
-            <Card className="border-gray-800 bg-gray-800/40">
+            <Card className="border-gray-200 bg-white/40">
               <CardBody className="p-6">
-                <h3 className="text-base font-bold text-white mb-4">Earnings distribution per Course module</h3>
+                <h3 className="text-base font-bold text-gray-900 mb-4">Earnings distribution per Course module</h3>
                 <div className="space-y-4">
                   {courses.map(course => {
                     const courseSales = payments
@@ -1558,9 +1539,9 @@ export default function AdminDashboard() {
                     const barPercent = totalRevenue > 0 ? (courseSales / totalRevenue) * 100 : 0;
                     return (
                       <div key={course.id}>
-                        <div className="flex justify-between text-xs text-gray-300 mb-1.5">
+                        <div className="flex justify-between text-xs text-gray-700 mb-1.5">
                           <span>{course.title}</span>
-                          <span className="font-semibold text-white">${courseSales.toLocaleString()}</span>
+                          <span className="font-semibold text-gray-900">${courseSales.toLocaleString()}</span>
                         </div>
                         <ProgressBar value={Math.min(100, barPercent)} color="blue" />
                       </div>
@@ -1577,9 +1558,9 @@ export default function AdminDashboard() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
             <div className="space-y-6">
               {/* LMS Branding Form */}
-              <Card className="border-gray-800 bg-gray-800/40">
+              <Card className="border-gray-200 bg-white/40">
                 <CardBody className="p-6">
-                  <h3 className="text-base font-bold text-white mb-4 flex items-center gap-2">
+                  <h3 className="text-base font-bold text-gray-900 mb-4 flex items-center gap-2">
                     <img src="/logo.png" className="w-5 h-5" alt="logo" /> Platform Preferences
                   </h3>
                   
@@ -1587,7 +1568,7 @@ export default function AdminDashboard() {
                     <Input 
                       label="Platform brand Logo/Name"
                       type="text"
-                      className="bg-gray-700 border-gray-600 text-white"
+                      className="bg-gray-700 border-gray-600 text-gray-900"
                       value={platformName}
                       onChange={e => setPlatformName(e.target.value)}
                       required
@@ -1595,13 +1576,13 @@ export default function AdminDashboard() {
 
                     <div className="grid grid-cols-2 gap-4">
                       <div className="w-full">
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-700 mb-2">
                           LMS Base Currency
                         </label>
                         <select 
                           value={currency}
                           onChange={e => setCurrency(e.target.value)}
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:bg-gray-700 dark:border-gray-600 dark:text-white bg-gray-700 border-gray-600 text-white"
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:bg-gray-700 dark:border-gray-600 dark:text-gray-900 bg-gray-700 border-gray-600 text-gray-900"
                         >
                           <option value="USD">USD ($)</option>
                           <option value="EUR">EUR (€)</option>
@@ -1613,7 +1594,7 @@ export default function AdminDashboard() {
                         type="number"
                         min="5" 
                         max="480"
-                        className="bg-gray-700 border-gray-600 text-white"
+                        className="bg-gray-700 border-gray-600 text-gray-900"
                         value={sessionTimeout}
                         onChange={e => setSessionTimeout(e.target.value)}
                         required
@@ -1628,9 +1609,9 @@ export default function AdminDashboard() {
               </Card>
 
               {/* Password credentials change */}
-              <Card className="border-gray-800 bg-gray-800/40">
+              <Card className="border-gray-200 bg-white/40">
                 <CardBody className="p-6">
-                  <h3 className="text-base font-bold text-white mb-4 flex items-center gap-2">
+                  <h3 className="text-base font-bold text-gray-900 mb-4 flex items-center gap-2">
                     <Key className="w-5 h-5 text-amber-400" /> Credentials change
                   </h3>
 
@@ -1639,7 +1620,7 @@ export default function AdminDashboard() {
                       label="Current administrator password"
                       type="password"
                       placeholder="••••••••"
-                      className="bg-gray-700 border-gray-600 text-white"
+                      className="bg-gray-700 border-gray-600 text-gray-900"
                       value={passwords.current}
                       onChange={e => setPasswords({ ...passwords, current: e.target.value })}
                       required
@@ -1649,7 +1630,7 @@ export default function AdminDashboard() {
                         label="New password"
                         type="password"
                         placeholder="••••••••"
-                        className="bg-gray-700 border-gray-600 text-white"
+                        className="bg-gray-700 border-gray-600 text-gray-900"
                         value={passwords.newPass}
                         onChange={e => setPasswords({ ...passwords, newPass: e.target.value })}
                         required
@@ -1658,14 +1639,14 @@ export default function AdminDashboard() {
                         label="Confirm new password"
                         type="password"
                         placeholder="••••••••"
-                        className="bg-gray-700 border-gray-600 text-white"
+                        className="bg-gray-700 border-gray-600 text-gray-900"
                         value={passwords.confirm}
                         onChange={e => setPasswords({ ...passwords, confirm: e.target.value })}
                         required
                       />
                     </div>
 
-                    <Button type="submit" variant="outline" size="sm" className="w-full mt-6 bg-gray-800 border-gray-700 text-white hover:bg-gray-700">
+                    <Button type="submit" variant="outline" size="sm" className="w-full mt-6 bg-white border-gray-200 text-gray-900 hover:bg-gray-50">
                       Update credentials
                     </Button>
                   </form>
@@ -1678,7 +1659,7 @@ export default function AdminDashboard() {
                   <h3 className="text-base font-bold text-red-400 mb-2 flex items-center gap-2">
                     <AlertCircle className="w-5 h-5" /> Reset Database
                   </h3>
-                  <p className="text-xs text-gray-400 mb-4">
+                  <p className="text-xs text-gray-500 mb-4">
                     Clear all dummy entries and custom records. This will restore the database to an empty slate, keeping only the courses catalog, instructors, and admin user profiles.
                   </p>
                   <Button 
@@ -1694,9 +1675,9 @@ export default function AdminDashboard() {
             </div>
 
             {/* Audit Logs */}
-            <Card className="border-gray-800 bg-gray-800/40">
+            <Card className="border-gray-200 bg-white/40">
               <CardBody className="p-6">
-                <h3 className="text-base font-bold text-white mb-2 flex items-center gap-2">
+                <h3 className="text-base font-bold text-gray-900 mb-2 flex items-center gap-2">
                   <Shield className="w-5 h-5 text-green-400" /> Security Event Logs
                 </h3>
                 <p className="text-xs text-gray-500 mb-4">Track administrative operations and sessions.</p>
@@ -1704,19 +1685,19 @@ export default function AdminDashboard() {
                 <div className="relative mb-4">
                   <input 
                     type="text" 
-                    className="w-full bg-gray-700 border border-gray-600 text-white pl-10 pr-4 py-2 rounded-lg text-xs focus:outline-none"
+                    className="w-full bg-gray-700 border border-gray-600 text-gray-900 pl-10 pr-4 py-2 rounded-lg text-xs focus:outline-none"
                     placeholder="Search logs..." 
                     value={searchQuery}
                     onChange={e => setSearchQuery(e.target.value)}
                   />
-                  <span className="absolute left-3 top-2 text-gray-400 text-xs">🔍</span>
+                  <span className="absolute left-3 top-2 text-gray-500 text-xs">🔍</span>
                 </div>
 
                 <div className="space-y-4 max-h-[380px] overflow-y-auto pr-2">
                   {auditLogs
                     .filter(log => log.action.toLowerCase().includes(searchQuery.toLowerCase()) || log.user.toLowerCase().includes(searchQuery.toLowerCase()))
                     .map(log => (
-                      <div key={log.id} className="bg-gray-800 border border-gray-700/60 p-3 rounded-lg text-xs space-y-1.5">
+                      <div key={log.id} className="bg-white border border-gray-200/60 p-3 rounded-lg text-xs space-y-1.5">
                         <div className="flex justify-between text-gray-500">
                           <span>User: <strong>{log.user}</strong></span>
                           <span>{log.timestamp}</span>
@@ -1742,7 +1723,7 @@ export default function AdminDashboard() {
               label="Student Name"
               type="text"
               placeholder="e.g. David Smith"
-              className="bg-gray-700 border-gray-600 text-white"
+              className="bg-gray-700 border-gray-600 text-gray-900"
               value={studentForm.fullName}
               onChange={e => setStudentForm({ ...studentForm, fullName: e.target.value })}
               required
@@ -1751,7 +1732,7 @@ export default function AdminDashboard() {
               label="Email Address"
               type="email"
               placeholder="e.g. david.smith@example.com"
-              className="bg-gray-700 border-gray-600 text-white"
+              className="bg-gray-700 border-gray-600 text-gray-900"
               value={studentForm.email}
               onChange={e => setStudentForm({ ...studentForm, email: e.target.value })}
               required
@@ -1760,19 +1741,19 @@ export default function AdminDashboard() {
               label="Mobile phone number"
               type="tel"
               placeholder="+1987654320"
-              className="bg-gray-700 border-gray-600 text-white"
+              className="bg-gray-700 border-gray-600 text-gray-900"
               value={studentForm.mobile}
               onChange={e => setStudentForm({ ...studentForm, mobile: e.target.value })}
             />
             
             <div className="space-y-2">
-              <label className="text-xs font-semibold text-gray-400">Enroll in Course Curriculum modules:</label>
-              <div className="border border-gray-700 rounded-lg p-3 max-h-[120px] overflow-y-auto space-y-2 bg-gray-800">
+              <label className="text-xs font-semibold text-gray-500">Enroll in Course Curriculum modules:</label>
+              <div className="border border-gray-200 rounded-lg p-3 max-h-[120px] overflow-y-auto space-y-2 bg-white">
                 {courses.map(course => (
-                  <label key={course.id} className="flex items-center space-x-2 text-xs cursor-pointer text-gray-300">
+                  <label key={course.id} className="flex items-center space-x-2 text-xs cursor-pointer text-gray-700">
                     <input 
                       type="checkbox"
-                      className="rounded border-gray-600 bg-gray-700 text-indigo-600"
+                      className="rounded border-gray-600 bg-gray-700 text-orange-600"
                       checked={studentForm.enrolledCourses.includes(course.id)}
                       onChange={() => {
                         const enrolled = studentForm.enrolledCourses.includes(course.id)
@@ -1802,7 +1783,7 @@ export default function AdminDashboard() {
             <Input 
               label="Student Name"
               type="text"
-              className="bg-gray-700 border-gray-600 text-white"
+              className="bg-gray-700 border-gray-600 text-gray-900"
               value={studentForm.fullName}
               onChange={e => setStudentForm({ ...studentForm, fullName: e.target.value })}
               required
@@ -1810,7 +1791,7 @@ export default function AdminDashboard() {
             <Input 
               label="Email Address"
               type="email"
-              className="bg-gray-700 border-gray-600 text-white"
+              className="bg-gray-700 border-gray-600 text-gray-900"
               value={studentForm.email}
               onChange={e => setStudentForm({ ...studentForm, email: e.target.value })}
               required
@@ -1818,19 +1799,19 @@ export default function AdminDashboard() {
             <Input 
               label="Mobile phone number"
               type="tel"
-              className="bg-gray-700 border-gray-600 text-white"
+              className="bg-gray-700 border-gray-600 text-gray-900"
               value={studentForm.mobile}
               onChange={e => setStudentForm({ ...studentForm, mobile: e.target.value })}
             />
 
             <div className="space-y-2">
-              <label className="text-xs font-semibold text-gray-400">Enrollments:</label>
-              <div className="border border-gray-700 rounded-lg p-3 max-h-[120px] overflow-y-auto space-y-2 bg-gray-800">
+              <label className="text-xs font-semibold text-gray-500">Enrollments:</label>
+              <div className="border border-gray-200 rounded-lg p-3 max-h-[120px] overflow-y-auto space-y-2 bg-white">
                 {courses.map(course => (
-                  <label key={course.id} className="flex items-center space-x-2 text-xs cursor-pointer text-gray-300">
+                  <label key={course.id} className="flex items-center space-x-2 text-xs cursor-pointer text-gray-700">
                     <input 
                       type="checkbox"
-                      className="rounded border-gray-600 bg-gray-700 text-indigo-600"
+                      className="rounded border-gray-600 bg-gray-700 text-orange-600"
                       checked={studentForm.enrolledCourses.includes(course.id)}
                       onChange={() => {
                         const enrolled = studentForm.enrolledCourses.includes(course.id)
@@ -1857,30 +1838,30 @@ export default function AdminDashboard() {
       {selectedStudent && (
         <Modal isOpen={!!selectedStudent} onClose={() => setSelectedStudent(null)} title="Student Profile Overview">
           <div className="space-y-6">
-            <div className="flex items-center space-x-4 border-b border-gray-700 pb-4">
-              <div className="w-12 h-12 rounded-full bg-indigo-600 flex items-center justify-center font-bold text-white text-lg">
+            <div className="flex items-center space-x-4 border-b border-gray-200 pb-4">
+              <div className="w-12 h-12 rounded-full bg-orange-600 flex items-center justify-center font-bold text-gray-900 text-lg">
                 {selectedStudent.fullName[0].toUpperCase()}
               </div>
               <div>
-                <h3 className="font-bold text-white text-base">{selectedStudent.fullName}</h3>
-                <p className="text-xs text-gray-400">{selectedStudent.email} | Status: {selectedStudent.isBanned ? 'Banned' : 'Active'}</p>
+                <h3 className="font-bold text-gray-900 text-base">{selectedStudent.fullName}</h3>
+                <p className="text-xs text-gray-500">{selectedStudent.email} | Status: {selectedStudent.isBanned ? 'Banned' : 'Active'}</p>
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               {/* Enrolled courses progress */}
               <div className="space-y-4">
-                <h4 className="text-xs font-semibold text-gray-400 uppercase">Enrolled Course Curriculum</h4>
+                <h4 className="text-xs font-semibold text-gray-500 uppercase">Enrolled Course Curriculum</h4>
                 <div className="space-y-2">
                   {selectedStudent.enrolledCourses?.map((cid: string) => {
                     const course = courses.find(c => c.id === cid);
                     const progressObj = localStorageService.getCourseProgress(selectedStudent.id, cid);
                     const progressVal = progressObj ? progressObj.overallProgress : 0;
                     return (
-                      <div key={cid} className="bg-gray-800 border border-gray-700 p-3 rounded-lg text-xs">
+                      <div key={cid} className="bg-white border border-gray-200 p-3 rounded-lg text-xs">
                         <div className="flex justify-between font-semibold mb-1">
                           <span>{course?.title || 'Course'}</span>
-                          <span className="text-gray-400">{progressVal}%</span>
+                          <span className="text-gray-500">{progressVal}%</span>
                         </div>
                         <ProgressBar value={progressVal} color="blue" />
                       </div>
@@ -1894,7 +1875,7 @@ export default function AdminDashboard() {
 
               {/* Certificates and Transactions */}
               <div className="space-y-4">
-                <h4 className="text-xs font-semibold text-gray-400 uppercase">Earned Certificates</h4>
+                <h4 className="text-xs font-semibold text-gray-500 uppercase">Earned Certificates</h4>
                 <div className="space-y-2">
                   {selectedStudent.certs?.map((c: Certificate) => (
                     <div key={c.id} className="bg-green-500/10 border border-green-500/20 text-green-400 p-2 rounded-lg text-xs flex justify-between items-center">
@@ -1907,10 +1888,10 @@ export default function AdminDashboard() {
                   )}
                 </div>
 
-                <h4 className="text-xs font-semibold text-gray-400 uppercase pt-2">Transaction Logs</h4>
+                <h4 className="text-xs font-semibold text-gray-500 uppercase pt-2">Transaction Logs</h4>
                 <div className="space-y-2 max-h-[100px] overflow-y-auto">
                   {selectedStudent.payments?.map((p: Payment) => (
-                    <div key={p.id} className="bg-gray-800 border border-gray-700 p-2 rounded-lg text-[11px] flex justify-between">
+                    <div key={p.id} className="bg-white border border-gray-200 p-2 rounded-lg text-[11px] flex justify-between">
                       <span>${p.amount} ({p.status})</span>
                       <span className="text-gray-500">{new Date(p.createdAt).toLocaleDateString()}</span>
                     </div>
@@ -1937,18 +1918,18 @@ export default function AdminDashboard() {
               label="Course Title"
               type="text"
               placeholder="e.g. Python Developer Bootcamp"
-              className="bg-gray-700 border-gray-600 text-white"
+              className="bg-gray-700 border-gray-600 text-gray-900"
               value={courseForm.title}
               onChange={e => setCourseForm({ ...courseForm, title: e.target.value })}
               required
             />
             <div className="grid grid-cols-2 gap-4">
               <div className="w-full">
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-700 mb-2">
                   Category
                 </label>
                 <select 
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:bg-gray-700 dark:border-gray-600 dark:text-white bg-gray-700 border-gray-600 text-white"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:bg-gray-700 dark:border-gray-600 dark:text-gray-900 bg-gray-700 border-gray-600 text-gray-900"
                   value={courseForm.category}
                   onChange={e => setCourseForm({ ...courseForm, category: e.target.value as any })}
                 >
@@ -1962,7 +1943,7 @@ export default function AdminDashboard() {
                 label="Price (USD)"
                 type="number"
                 step="0.01"
-                className="bg-gray-700 border-gray-600 text-white"
+                className="bg-gray-700 border-gray-600 text-gray-900"
                 value={courseForm.price}
                 onChange={e => setCourseForm({ ...courseForm, price: Number(e.target.value) })}
                 required
@@ -1971,18 +1952,18 @@ export default function AdminDashboard() {
             <TextArea 
               label="Course Description"
               placeholder="Provide a syllabus summary..."
-              className="bg-gray-700 border-gray-600 text-white"
+              className="bg-gray-700 border-gray-600 text-gray-900"
               value={courseForm.description}
               onChange={e => setCourseForm({ ...courseForm, description: e.target.value })}
             />
 
             {/* Video Curriculum Nested Editor */}
-            <div className="border-t border-gray-700 pt-4 space-y-3">
-              <h4 className="text-xs font-semibold text-gray-400">Curriculum Video Lectures ({courseForm.lessons.length})</h4>
+            <div className="border-t border-gray-200 pt-4 space-y-3">
+              <h4 className="text-xs font-semibold text-gray-500">Curriculum Video Lectures ({courseForm.lessons.length})</h4>
               
-              <div className="space-y-2 max-h-[100px] overflow-y-auto bg-gray-800 p-2.5 rounded-lg border border-gray-700">
+              <div className="space-y-2 max-h-[100px] overflow-y-auto bg-white p-2.5 rounded-lg border border-gray-200">
                 {courseForm.lessons.map((lesson, idx) => (
-                  <div key={idx} className="flex justify-between items-center text-xs text-gray-300">
+                  <div key={idx} className="flex justify-between items-center text-xs text-gray-700">
                     <span>{idx + 1}. {lesson.title} ({lesson.duration}m)</span>
                     <button type="button" onClick={() => handleRemoveVideo(idx)} className="text-red-500 text-[10px] underline">Remove</button>
                   </div>
@@ -1992,22 +1973,22 @@ export default function AdminDashboard() {
                 )}
               </div>
 
-              <div className="flex gap-2 bg-gray-800 p-2.5 rounded-lg border border-gray-700">
+              <div className="flex gap-2 bg-white p-2.5 rounded-lg border border-gray-200">
                 <input 
                   type="text"
                   placeholder="Lecture Title"
-                  className="flex-1 bg-gray-700 border-gray-600 text-xs px-2.5 py-1.5 rounded text-white"
+                  className="flex-1 bg-gray-700 border-gray-600 text-xs px-2.5 py-1.5 rounded text-gray-900"
                   value={newLesson.title}
                   onChange={e => setNewLesson({ ...newLesson, title: e.target.value })}
                 />
                 <input 
                   type="number"
                   placeholder="Min"
-                  className="w-16 bg-gray-700 border-gray-600 text-xs px-2.5 py-1.5 rounded text-white"
+                  className="w-16 bg-gray-700 border-gray-600 text-xs px-2.5 py-1.5 rounded text-gray-900"
                   value={newLesson.duration}
                   onChange={e => setNewLesson({ ...newLesson, duration: e.target.value })}
                 />
-                <button type="button" className="bg-indigo-600 text-xs px-3 py-1.5 rounded font-bold text-white" onClick={handleAddVideo}>
+                <button type="button" className="bg-orange-600 text-xs px-3 py-1.5 rounded font-bold text-gray-900" onClick={handleAddVideo}>
                   Add
                 </button>
               </div>
@@ -2020,7 +2001,7 @@ export default function AdminDashboard() {
                 checked={courseForm.published}
                 onChange={e => setCourseForm({ ...courseForm, published: e.target.checked })}
               />
-              <label htmlFor="pubAdd" className="text-xs text-gray-400 cursor-pointer">Publish curriculum immediately</label>
+              <label htmlFor="pubAdd" className="text-xs text-gray-500 cursor-pointer">Publish curriculum immediately</label>
             </div>
 
             <div className="flex justify-end space-x-3 pt-4">
@@ -2038,18 +2019,18 @@ export default function AdminDashboard() {
             <Input 
               label="Course Title"
               type="text"
-              className="bg-gray-700 border-gray-600 text-white"
+              className="bg-gray-700 border-gray-600 text-gray-900"
               value={courseForm.title}
               onChange={e => setCourseForm({ ...courseForm, title: e.target.value })}
               required
             />
             <div className="grid grid-cols-2 gap-4">
               <div className="w-full">
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-700 mb-2">
                   Category
                 </label>
                 <select 
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:bg-gray-700 dark:border-gray-600 dark:text-white bg-gray-700 border-gray-600 text-white"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:bg-gray-700 dark:border-gray-600 dark:text-gray-900 bg-gray-700 border-gray-600 text-gray-900"
                   value={courseForm.category}
                   onChange={e => setCourseForm({ ...courseForm, category: e.target.value as any })}
                 >
@@ -2063,7 +2044,7 @@ export default function AdminDashboard() {
                 label="Price (USD)"
                 type="number"
                 step="0.01"
-                className="bg-gray-700 border-gray-600 text-white"
+                className="bg-gray-700 border-gray-600 text-gray-900"
                 value={courseForm.price}
                 onChange={e => setCourseForm({ ...courseForm, price: Number(e.target.value) })}
                 required
@@ -2071,18 +2052,18 @@ export default function AdminDashboard() {
             </div>
             <TextArea 
               label="Course Description"
-              className="bg-gray-700 border-gray-600 text-white"
+              className="bg-gray-700 border-gray-600 text-gray-900"
               value={courseForm.description}
               onChange={e => setCourseForm({ ...courseForm, description: e.target.value })}
             />
 
             {/* Video Curriculum Nested Editor */}
-            <div className="border-t border-gray-700 pt-4 space-y-3">
-              <h4 className="text-xs font-semibold text-gray-400">Curriculum Video Lectures ({courseForm.lessons.length})</h4>
+            <div className="border-t border-gray-200 pt-4 space-y-3">
+              <h4 className="text-xs font-semibold text-gray-500">Curriculum Video Lectures ({courseForm.lessons.length})</h4>
               
-              <div className="space-y-2 max-h-[100px] overflow-y-auto bg-gray-800 p-2.5 rounded-lg border border-gray-700">
+              <div className="space-y-2 max-h-[100px] overflow-y-auto bg-white p-2.5 rounded-lg border border-gray-200">
                 {courseForm.lessons.map((lesson, idx) => (
-                  <div key={idx} className="flex justify-between items-center text-xs text-gray-300">
+                  <div key={idx} className="flex justify-between items-center text-xs text-gray-700">
                     <span>{idx + 1}. {lesson.title} ({lesson.duration}m)</span>
                     <button type="button" onClick={() => handleRemoveVideo(idx)} className="text-red-500 text-[10px] underline">Remove</button>
                   </div>
@@ -2092,22 +2073,22 @@ export default function AdminDashboard() {
                 )}
               </div>
 
-              <div className="flex gap-2 bg-gray-800 p-2.5 rounded-lg border border-gray-700">
+              <div className="flex gap-2 bg-white p-2.5 rounded-lg border border-gray-200">
                 <input 
                   type="text"
                   placeholder="Lecture Title"
-                  className="flex-1 bg-gray-700 border-gray-600 text-xs px-2.5 py-1.5 rounded text-white"
+                  className="flex-1 bg-gray-700 border-gray-600 text-xs px-2.5 py-1.5 rounded text-gray-900"
                   value={newLesson.title}
                   onChange={e => setNewLesson({ ...newLesson, title: e.target.value })}
                 />
                 <input 
                   type="number"
                   placeholder="Min"
-                  className="w-16 bg-gray-700 border-gray-600 text-xs px-2.5 py-1.5 rounded text-white"
+                  className="w-16 bg-gray-700 border-gray-600 text-xs px-2.5 py-1.5 rounded text-gray-900"
                   value={newLesson.duration}
                   onChange={e => setNewLesson({ ...newLesson, duration: e.target.value })}
                 />
-                <button type="button" className="bg-indigo-600 text-xs px-3 py-1.5 rounded font-bold text-white" onClick={handleAddVideo}>
+                <button type="button" className="bg-orange-600 text-xs px-3 py-1.5 rounded font-bold text-gray-900" onClick={handleAddVideo}>
                   Add
                 </button>
               </div>
@@ -2120,7 +2101,7 @@ export default function AdminDashboard() {
                 checked={courseForm.published}
                 onChange={e => setCourseForm({ ...courseForm, published: e.target.checked })}
               />
-              <label htmlFor="pubEdit" className="text-xs text-gray-400 cursor-pointer">Publish curriculum</label>
+              <label htmlFor="pubEdit" className="text-xs text-gray-500 cursor-pointer">Publish curriculum</label>
             </div>
 
             <div className="flex justify-end space-x-3 pt-4">
@@ -2135,7 +2116,7 @@ export default function AdminDashboard() {
       {selectedSubmission && (
         <Modal isOpen={!!selectedSubmission} onClose={() => setSelectedSubmission(null)} title="Grade Student Submission">
           <form onSubmit={handleGradeSubmit} className="space-y-4">
-            <div className="bg-gray-800 border border-gray-700 p-3 rounded-lg text-xs space-y-1.5 text-gray-300">
+            <div className="bg-white border border-gray-200 p-3 rounded-lg text-xs space-y-1.5 text-gray-700">
               <p><strong>Student ID:</strong> {selectedSubmission.studentId}</p>
               <p><strong>Associated Module:</strong> {courses.find(c => c.id === selectedSubmission.courseId)?.title}</p>
               <p><strong>File attachment:</strong> {selectedSubmission.files[0]?.title}</p>
@@ -2147,7 +2128,7 @@ export default function AdminDashboard() {
               type="number"
               min="0"
               max="5"
-              className="bg-gray-700 border-gray-600 text-white"
+              className="bg-gray-700 border-gray-600 text-gray-900"
               value={gradeForm.score}
               onChange={e => setGradeForm({ ...gradeForm, score: e.target.value })}
               required
@@ -2156,7 +2137,7 @@ export default function AdminDashboard() {
             <TextArea 
               label="Critique feedback and comments"
               placeholder="Provide grading comments..."
-              className="bg-gray-700 border-gray-600 text-white"
+              className="bg-gray-700 border-gray-600 text-gray-900"
               value={gradeForm.feedback}
               onChange={e => setGradeForm({ ...gradeForm, feedback: e.target.value })}
             />
@@ -2174,11 +2155,11 @@ export default function AdminDashboard() {
         <Modal isOpen={isManualCertOpen} onClose={() => setIsManualCertOpen(false)} title="Issue Exemption Certificate">
           <form onSubmit={handleIssueCertManual} className="space-y-4">
             <div className="w-full">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-700 mb-2">
                 Select Student Profile
               </label>
               <select 
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:bg-gray-700 dark:border-gray-600 dark:text-white bg-gray-700 border-gray-600 text-white"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:bg-gray-700 dark:border-gray-600 dark:text-gray-900 bg-gray-700 border-gray-600 text-gray-900"
                 value={manualCertForm.studentId}
                 onChange={e => setManualCertForm({ ...manualCertForm, studentId: e.target.value })}
                 required
@@ -2191,11 +2172,11 @@ export default function AdminDashboard() {
             </div>
 
             <div className="w-full">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-700 mb-2">
                 Select Course Module
               </label>
               <select 
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:bg-gray-700 dark:border-gray-600 dark:text-white bg-gray-700 border-gray-600 text-white"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:bg-gray-700 dark:border-gray-600 dark:text-gray-900 bg-gray-700 border-gray-600 text-gray-900"
                 value={manualCertForm.courseId}
                 onChange={e => setManualCertForm({ ...manualCertForm, courseId: e.target.value })}
                 required
@@ -2219,14 +2200,14 @@ export default function AdminDashboard() {
       {certRevokeModal && (
         <Modal isOpen={!!certRevokeModal} onClose={() => setCertRevokeModal(null)} title="Revoke Certificate Exemption">
           <form onSubmit={handleRevokeCert} className="space-y-4">
-            <p className="text-xs text-gray-400">
+            <p className="text-xs text-gray-500">
               You are about to revoke the certificate issued to <strong>{certRevokeModal.studentName}</strong> for course <strong>{certRevokeModal.courseName}</strong>. This action is recorded in security audit event trails.
             </p>
             <Input 
               label="Reason for revocation"
               type="text"
               placeholder="e.g. Incorrect score calculations detected"
-              className="bg-gray-700 border-gray-600 text-white"
+              className="bg-gray-700 border-gray-600 text-gray-900"
               value={revokeReason}
               onChange={e => setRevokeReason(e.target.value)}
               required
@@ -2244,13 +2225,13 @@ export default function AdminDashboard() {
       {selectedInvoice && (
         <Modal isOpen={!!selectedInvoice} onClose={() => setSelectedInvoice(null)} title="Receipt summary invoice">
           <div className="space-y-6">
-            <div className="border-2 border-dashed border-gray-700 p-6 rounded-lg space-y-4 bg-gray-800 text-xs text-gray-300">
-              <div className="text-center pb-4 border-b border-gray-700">
-                <h4 className="font-extrabold text-sm text-indigo-400">{platformName.toUpperCase()} LMS</h4>
+            <div className="border-2 border-dashed border-gray-200 p-6 rounded-lg space-y-4 bg-white text-xs text-gray-700">
+              <div className="text-center pb-4 border-b border-gray-200">
+                <h4 className="font-extrabold text-sm text-orange-400">{platformName.toUpperCase()} LMS</h4>
                 <p className="text-[10px] text-gray-500 mt-1">Electronic Payment Summary</p>
               </div>
 
-              <div className="flex justify-between border-b border-gray-700/50 pb-2">
+              <div className="flex justify-between border-b border-gray-200/50 pb-2">
                 <span><strong>Transaction:</strong> {selectedInvoice.transactionId}</span>
                 <span><strong>Invoice:</strong> {selectedInvoice.invoiceId}</span>
               </div>
@@ -2263,12 +2244,12 @@ export default function AdminDashboard() {
                 <p><strong>Status:</strong> <span className="uppercase font-semibold">{selectedInvoice.status}</span></p>
               </div>
 
-              <div className="border-t border-gray-700/50 pt-3">
-                <div className="flex justify-between font-bold text-gray-100">
+              <div className="border-t border-gray-200/50 pt-3">
+                <div className="flex justify-between font-bold text-gray-900">
                   <span>{courses.find(c => c.id === selectedInvoice.courseId)?.title || 'Course Tuition'}</span>
                   <span>${selectedInvoice.amount}.00</span>
                 </div>
-                <div className="flex justify-between font-extrabold text-white text-sm border-t border-gray-700 pt-3 mt-3">
+                <div className="flex justify-between font-extrabold text-gray-900 text-sm border-t border-gray-200 pt-3 mt-3">
                   <span>Grand Total</span>
                   <span>${selectedInvoice.amount}.00</span>
                 </div>

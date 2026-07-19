@@ -34,13 +34,13 @@ export const CustomToast: React.FC<ToastProps> = ({ message, type = 'info' }) =>
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: 100 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: 100 }}
-      className={`flex items-center gap-3 p-4 ${backgrounds[type]} ${hoverBackgrounds[type]} rounded-lg shadow-xl min-w-[300px] max-w-md`}
+      initial={{ opacity: 0, scale: 0.9, y: 20 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.9, y: 20 }}
+      className={`flex items-center gap-3 px-5 py-3 ${backgrounds[type]} rounded-full shadow-2xl min-w-fit max-w-md mx-auto`}
     >
       {icons[type]}
-      <p className="text-sm text-white font-medium flex-1">{message}</p>
+      <p className="text-sm text-white font-medium flex-1 tracking-wide">{message}</p>
     </motion.div>
   );
 };
@@ -48,7 +48,7 @@ export const CustomToast: React.FC<ToastProps> = ({ message, type = 'info' }) =>
 export const Toaster: React.FC = () => {
   return (
     <HotToaster
-      position="top-right"
+      position="bottom-center"
       toastOptions={{
         duration: 3000,
         style: {

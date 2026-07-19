@@ -78,7 +78,7 @@ export default function InstructorDashboard() {
       label: 'Total Revenue',
       value: `$${totalRevenue.toLocaleString()}`,
       icon: <DollarSign className="w-6 h-6" />,
-      color: 'purple',
+      color: 'blue',
     },
     {
       label: 'Average Rating',
@@ -154,6 +154,64 @@ export default function InstructorDashboard() {
             </motion.div>
           ))}
         </div>
+
+        {/* Analytics Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+          className="mb-8"
+        >
+          <Card>
+            <CardBody className="p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                  <BarChart3 className="w-5 h-5 text-blue-500" />
+                  Revenue Analytics
+                </h2>
+                <div className="flex gap-2">
+                  <Badge variant="success">This Month: +12%</Badge>
+                </div>
+              </div>
+              <div className="h-64 flex items-end gap-2 sm:gap-4 md:gap-6 pt-4 border-b border-gray-200 dark:border-gray-800 pb-2 relative">
+                {/* Y-axis labels mock */}
+                <div className="absolute left-0 top-0 h-full flex flex-col justify-between text-xs text-gray-400 py-2">
+                  <span>$5k</span>
+                  <span>$2.5k</span>
+                  <span>$0</span>
+                </div>
+                <div className="flex-1 flex items-end justify-around pl-8 h-full">
+                  {[
+                    { month: 'Jan', value: 40 },
+                    { month: 'Feb', value: 65 },
+                    { month: 'Mar', value: 45 },
+                    { month: 'Apr', value: 80 },
+                    { month: 'May', value: 55 },
+                    { month: 'Jun', value: 90 },
+                    { month: 'Jul', value: 100 },
+                  ].map((data, i) => (
+                    <div key={data.month} className="flex flex-col items-center gap-2 group w-full max-w-[40px]">
+                      <div className="relative w-full h-[200px] flex items-end justify-center">
+                        <motion.div 
+                          initial={{ height: 0 }}
+                          animate={{ height: `${data.value}%` }}
+                          transition={{ duration: 1, delay: i * 0.1 }}
+                          className="w-full bg-gradient-to-t from-blue-600 to-orange-400 rounded-t-md relative group-hover:opacity-80 transition-opacity cursor-pointer"
+                        >
+                          {/* Tooltip */}
+                          <div className="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-[10px] py-1 px-2 rounded pointer-events-none transition-opacity whitespace-nowrap z-10">
+                            ${data.value * 50}
+                          </div>
+                        </motion.div>
+                      </div>
+                      <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">{data.month}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </CardBody>
+          </Card>
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
@@ -276,7 +334,7 @@ export default function InstructorDashboard() {
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <div className="w-2 h-2 bg-purple-600 rounded-full mt-2" />
+                      <div className="w-2 h-2 bg-blue-600 rounded-full mt-2" />
                       <div>
                         <p className="text-sm text-gray-900 dark:text-white">
                           5-star review received for "JavaScript Basics"
@@ -360,7 +418,7 @@ export default function InstructorDashboard() {
                         <span className="text-gray-600 dark:text-gray-400">Quiz Pass Rate</span>
                         <span className="font-medium text-gray-900 dark:text-white">85%</span>
                       </div>
-                      <ProgressBar value={85} color="purple" size="sm" />
+                      <ProgressBar value={85} color="blue" size="sm" />
                     </div>
                   </div>
                 </CardBody>

@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { Mail, Lock, Eye, EyeOff, Shield, ArrowLeft } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { localStorageService } from '@/services/localStorage';
-import { Input, Button, Card, CardBody } from '@/components/ui';
+import { Input, Button, Card, CardBody, BackgroundBlobs, Logo } from '@/components/ui';
 import toast from 'react-hot-toast';
 
 export default function AdminLoginPage() {
@@ -52,7 +52,7 @@ export default function AdminLoginPage() {
         // Check if user is admin
         const user = localStorageService.getCurrentUser();
         if (user && user.role === 'admin') {
-          toast.success('Admin login successful! Redirecting to dashboard...', {
+          toast.success('Admin login successful!', {
             duration: 2000,
           });
           setTimeout(() => {
@@ -78,7 +78,8 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen pt-20 pb-12 px-4 flex items-center justify-center bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="relative min-h-screen pt-20 pb-12 px-4 flex items-center justify-center bg-gray-50 dark:bg-[#0a0a0a] overflow-hidden">
+      <BackgroundBlobs />
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -91,12 +92,12 @@ export default function AdminLoginPage() {
         </Link>
 
         <Card glassmorphism>
-          <CardBody className="p-8">
-            <div className="text-center mb-8">
-              <div className="inline-flex p-3 rounded-full bg-gradient-to-r from-red-600 to-orange-600 mb-4">
-                <Shield className="w-8 h-8 text-white" />
+          <CardBody className="p-8 relative z-10">
+            <div className="text-center mb-8 flex flex-col items-center">
+              <div className="mb-6">
+                <Logo withText={false} className="scale-125" />
               </div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+              <h1 className="text-3xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-gray-900 to-gray-600 dark:from-white dark:to-gray-400 mb-2">
                 Admin Login
               </h1>
               <p className="text-gray-600 dark:text-gray-400">

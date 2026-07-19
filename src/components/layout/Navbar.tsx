@@ -4,10 +4,10 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Menu, X, Moon, Sun, BookOpen, GraduationCap } from 'lucide-react';
+import { Menu, X, Moon, Sun, BookOpen, GraduationCap, User } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
-import { Avatar } from '@/components/ui';
+import { Avatar, Logo } from '@/components/ui';
 import { Button } from '@/components/ui/Button';
 
 export const Navbar: React.FC = () => {
@@ -23,7 +23,10 @@ export const Navbar: React.FC = () => {
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'Courses', href: '/courses' },
-    { name: 'Assessment', href: '/assessment' },
+    { name: 'Workspace', href: '/ide' },
+    { name: 'Community', href: '/community' },
+    { name: 'Challenges', href: '/challenges' },
+    { name: 'Leaderboard', href: '/leaderboard' },
   ];
 
   const getDashboardLink = () => {
@@ -41,18 +44,11 @@ export const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-lg dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-700">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/70 backdrop-blur-2xl dark:bg-black/50 border-b border-gray-200/50 dark:border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-2 rounded-lg">
-              <GraduationCap className="w-6 h-6 text-white" />
-            </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Codivexa
-            </span>
-          </Link>
+          <Logo />
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
@@ -83,13 +79,30 @@ export const Navbar: React.FC = () => {
 
             {isAuthenticated ? (
               <>
+                {user?.role === 'student' && (
+                  <div className="flex items-center space-x-3 mr-2 bg-orange-50 dark:bg-orange-900/20 px-3 py-1.5 rounded-full border border-orange-200 dark:border-orange-500/30 shadow-sm cursor-help" title="Daily Streak & Points">
+                    <div className="flex items-center text-orange-600 dark:text-orange-400 font-bold text-sm">
+                      <motion.span 
+                        animate={{ scale: [1, 1.2, 1] }} 
+                        transition={{ repeat: Infinity, duration: 2 }} 
+                        className="mr-1 inline-block"
+                      >🔥</motion.span> {(user as any).streak || 2}
+                    </div>
+                    <div className="w-px h-4 bg-orange-300 dark:bg-orange-500/50"></div>
+                    <div className="flex items-center text-blue-600 dark:text-blue-400 font-bold text-sm">
+                      <span className="mr-1">⭐</span> {(user as any).points || 350}
+                    </div>
+                  </div>
+                )}
                 <Link href={getDashboardLink()}>
                   <Button variant="primary" size="sm">
                     Dashboard
                   </Button>
                 </Link>
                 <div className="flex items-center space-x-3">
-                  <Avatar src={user?.avatar} alt={user?.fullName} size="sm" />
+                  <div className="w-9 h-9 flex items-center justify-center rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-500 hover:bg-orange-500/20 transition-colors cursor-pointer">
+                    <User className="w-5 h-5" />
+                  </div>
                   <button
                     onClick={logout}
                     className="text-sm text-gray-700 dark:text-gray-300 hover:text-red-600 transition-colors"
